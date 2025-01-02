@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the value of type MUST be `attack-pattern`.
+
+    Scenario Outline: Creating an AttackPattern with an invalid type.
+        Given An AttackPattern is created with a <type_> different from `attack-pattern` and a valid <name>.
+        When The AttackPattern is created.
+        Then A ValueError should be raised, stating that the value of type must be `attack-pattern`.
+
+        Examples:
+            | type_              | name           |
+            | not-attack-pattern | AttackPattern1 |

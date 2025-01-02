@@ -1,0 +1,12 @@
+Feature: As stated by the 2.1 documentation, the aliases field should be a list of strings.
+
+    Scenario Outline: Creating an AttackPattern with invalid aliases.
+        Given An AttackPattern is created with a <type_>, <name>, and invalid <aliases>.
+        When The AttackPattern is created.
+        Then A TypeError should be raised, stating that <aliases> should be a list of strings.
+
+        Examples:
+            | type_          | name                  | aliases       |
+            | attack-pattern | AliasesAttackPattern1 | TestAliases   |
+            | attack-pattern | AliasesAttackPattern2 | {"qwe","rty"} |
+            | attack-pattern | AliasesAttackPattern3 | 12334         |

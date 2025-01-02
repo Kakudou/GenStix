@@ -4,3 +4,125 @@ project:
   types:
     - cli
     - tui
+  features:
+    AttackPatternCrudl:
+      description: CRUDL for the STIX 2.1 object AttackPattern.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with <type_>, <name>, and <description>.
+      name: AttackPatternCrudl
+      scenario: Performing CRUDL operations on a STIX 2.1 AttackPattern.
+      then: An AttackPattern should exist with <new_description>, <name>, and <type_>,
+        and one AttackPattern should be deleted.
+      type: gen_stix
+      when: The AttackPattern is created, updated with <new_description>, and deleted.
+  constraints:
+    AttackPatternCheckUnicityByTypeName:
+      description: As stated by the 2.1 documentation, the fields name and type are
+        required, so they can be used as unique identifiers for AttackPattern unicity.
+      domain: sdos/attack_pattern
+      given: Multiple AttackPatterns are created with the same <name> and <type_>.
+      name: AttackPatternCheckUnicityByTypeName
+      scenario: Creating multiple AttackPatterns with the same name and type.
+      then: A NameError exception should be raised with the message 'The AttackPattern
+        you want, already exists'.
+      type: gen_stix
+      when: An AttackPattern is created.
+    AttackPatternStix21ConstraintAliases:
+      description: As stated by the 2.1 documentation, the aliases field should be
+        a list of strings.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <type_>, <name>, and invalid <aliases>.
+      name: AttackPatternStix21ConstraintAliases
+      scenario: Creating an AttackPattern with invalid aliases.
+      then: A TypeError should be raised, stating that <aliases> should be a list
+        of strings.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21ConstraintDescription:
+      description: As stated by the 2.1 documentation, the description field should
+        be a string.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <type_>, <name>, and invalid <description>.
+      name: AttackPatternStix21ConstraintDescription
+      scenario: Creating an AttackPattern with an invalid description.
+      then: A TypeError should be raised, stating that <description> should be of
+        type string.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21ConstraintExternalReferences:
+      description: As stated by the 2.1 documentation, the external_references field
+        should be a list of external-references.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <type_>, <name>, and invalid <external_references>.
+      name: AttackPatternStix21ConstraintExternalReferences
+      scenario: Creating an AttackPattern with invalid external_references.
+      then: A ValueError should be raised, stating that <external_references> should
+        be a list of external-references.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21ConstraintKillChainPhases:
+      description: As stated by the 2.1 documentation, the kill_chain_phases field
+        should be a list of kill-chain-phases.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <type_>, <name>, and invalid <kill_chain_phases>.
+      name: AttackPatternStix21ConstraintKillChainPhases
+      scenario: Creating an AttackPattern with invalid kill_chain_phases.
+      then: A ValueError should be raised, stating that <kill_chain_phases> should
+        be a list of kill-chain-phases.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21ConstraintName:
+      description: As stated in the 2.1 documentation, the value of name should be
+        a string.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <name> that is not a string and a
+        valid <type_>.
+      name: AttackPatternStix21ConstraintName
+      scenario: Creating an AttackPattern with an invalid name.
+      then: A TypeError should be raised, stating that the value of name must be a
+        string.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21ConstraintType:
+      description: As stated in the 2.1 documentation, the value of type MUST be `attack-pattern`.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with a <type_> different from `attack-pattern`
+        and a valid <name>.
+      name: AttackPatternStix21ConstraintType
+      scenario: Creating an AttackPattern with an invalid type.
+      then: A ValueError should be raised, stating that the value of type must be
+        `attack-pattern`.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21OptionalFields:
+      description: The AttackPattern object should accept the following optional fields
+        external_references, description, aliases, kill_chain_phases.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created with <external_references>, <description>,
+        <aliases>, <kill_chain_phases>, a <name>, and a <type_>.
+      name: AttackPatternStix21OptionalFields
+      scenario: Creating an AttackPattern with all or some optional fields filled.
+      then: The fields <external_references>, <description>, <aliases>, <kill_chain_phases>,
+        <name>, and <type_> should match the input values.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21RequiredName:
+      description: To create a valid STIX 2.1 AttackPattern, the name is a required
+        field.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created without any name but with a <type_>.
+      name: AttackPatternStix21RequiredName
+      scenario: Creating an AttackPattern without a name.
+      then: A ValueError should be raised, stating the requirements for the name field.
+      type: gen_stix
+      when: The AttackPattern is created.
+    AttackPatternStix21RequiredType:
+      description: To create a valid STIX 2.1 AttackPattern, the type is a required
+        field.
+      domain: sdos/attack_pattern
+      given: An AttackPattern is created without any type but with a <name>.
+      name: AttackPatternStix21RequiredType
+      scenario: Creating an AttackPattern without a type.
+      then: A ValueError should be raised, stating the requirements for the type field.
+      type: gen_stix
+      when: The AttackPattern is created.

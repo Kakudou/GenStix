@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the value of name should be a string.
+
+    Scenario Outline: Creating an AttackPattern with an invalid name.
+        Given An AttackPattern is created with a <name> that is not a string and a valid <type_>.
+        When The AttackPattern is created.
+        Then A TypeError should be raised, stating that the value of name must be a string.
+
+        Examples:
+            | type_          | name                    |
+            | attack-pattern | ["Test", "bad", "name"] |

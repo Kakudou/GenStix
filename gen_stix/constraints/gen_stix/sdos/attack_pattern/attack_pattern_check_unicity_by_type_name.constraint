@@ -1,0 +1,10 @@
+Feature: As stated by the 2.1 documentation, the fields name and type are required, so they can be used as unique identifiers for AttackPattern unicity.
+
+    Scenario Outline: Creating multiple AttackPatterns with the same name and type.
+        Given Multiple AttackPatterns are created with the same <name> and <type_>.
+        When An AttackPattern is created.
+        Then A NameError exception should be raised with the message 'The AttackPattern you want, already exists'.
+
+        Examples:
+            | type_          | name                  |
+            | attack-pattern | UnicityAttackPattern1 |

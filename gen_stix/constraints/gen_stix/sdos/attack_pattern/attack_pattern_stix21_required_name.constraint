@@ -1,0 +1,10 @@
+Feature: To create a valid STIX 2.1 AttackPattern, the name is a required field.
+
+    Scenario Outline: Creating an AttackPattern without a name.
+        Given An AttackPattern is created without any name but with a <type_>.
+        When The AttackPattern is created.
+        Then A ValueError should be raised, stating the requirements for the name field.
+
+        Examples:
+            | type_          |
+            | attack-pattern |
