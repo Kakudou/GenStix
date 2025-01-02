@@ -11,7 +11,7 @@ class Container:
 
     Functions:
     ----------
-    _get_entity_name_from_usecase_name:
+    get_entity_name_from_usecase_name:
         get the entity_name from the usecase_name
     get_usecase:
         get the usecase from the usecase_name
@@ -23,7 +23,7 @@ class Container:
     """
 
     @staticmethod
-    def _get_entity_name_from_usecase_name(usecase_name: str):
+    def get_entity_name_from_usecase_name(usecase_name: str):
         """This function will get the entity_name for the usecase
 
         Parameters:
@@ -73,7 +73,7 @@ class Container:
                                "/src/gen_stix/usecase"):
             for file in c:
                 if file == f"{uc_snake}.py":
-                    module = import_module(f"{a.replace('/','.')}.{uc_snake}")
+                    module = import_module(f"{a.replace('/', '.')}.{uc_snake}")
                     klass = getattr(module, usecase_name)
 
         return klass
@@ -102,7 +102,7 @@ class Container:
         for a, b, c in os.walk("gen_stix/src/app/repository"):
             for file in c:
                 if file == f"{entity_name}_{method.lower()}_repository.py":
-                    module = import_module(f"{a.replace('/','.')}"
+                    module = import_module(f"{a.replace('/', '.')}"
                                            f".{entity_name}_"
                                            f"{method.lower()}_repository")
                     klassrepo = getattr(module, f"{entity}{method}Repository")
@@ -128,7 +128,7 @@ class Container:
         """
 
         klass = Container.get_usecase(usecase_name)
-        entity_name = Container._get_entity_name_from_usecase_name(usecase_name)
+        entity_name = Container.get_entity_name_from_usecase_name(usecase_name)
         klassrepo = Container.get_repository(entity_name, method)
 
         return klass(klassrepo())
