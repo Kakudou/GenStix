@@ -1,0 +1,6 @@
+project:
+  name: GenSTIX
+  path: /home/kakudou/construct/python/WiP
+  types:
+    - cli
+    - tui

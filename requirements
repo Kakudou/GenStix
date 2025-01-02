@@ -1,0 +1,7 @@
+# Requirements file
+
+# Dev Tools
+flake8
+autopep8
+pynvim
+pytest-bdd

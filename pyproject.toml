@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GenSTIX"
+authors = [
+  {name = "Kakudou ~ カクドウ", email = "contact@kakudou.org"},
+]
+description = "GenSTIX is a Python-based CLI/TUI tool for generating and bundling STIX 2.1 objects. It is tailored for researchers, malware analysts, pentesters, and threat intelligence professionals who require quick and offline STIX object creation."
+requires-python = ">=3.13"
+keywords = ["STIX", "STIX2", "Threat Intelligence", "Threat Hunting", "Threat Analysis", "Threat Detection", "Threat Intelligence Sharing", "Threat Intelligence Platform", "Threat Intelligence Feed", "Threat Intelligence Report", "Threat Intelligence Data", "Threat Intelligence Information", "Threat Intelligence Indicator", "Threat Intelligence Campaign", "Threat Intelligence Actor", "Threat Intelligence Malware", "Threat Intelligence Tool", "Threat Intelligence Tooling", "Threat Intelligence Framework", "Threat Intelligence Automation", "Threat Intelligence Integration" ]
+license = {text = "MIT"}
+classifiers = [
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.13",
+        "Software Architecture :: Clean-Architecture",
+        "Software Development :: BDD",
+        "Software Development :: TDD",
+        "Tools :: Threat Intelligence",
+        "Tools :: Security",
+        "Tools :: STIX 2.1 Generator",
+]
+dependencies = []
+dynamic = ["version", "readme"]
+
+[project.optional-dependencies]
+dev = ["flake8", "autopep8", "pynvim", "pytest-bdd", "pytest-order"]
+
+[project.scripts]
+GenStix = "gen_stix.__main__:gen_stix"
+
+[tool.setuptools.dynamic]
+version = {attr = "gen_stix.src.VERSION"}
+readme = {file = ["README.md"]}
+
