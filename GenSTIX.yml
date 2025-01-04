@@ -224,3 +224,59 @@ project:
       then: A ValueError should be raised, stating that <source_name> is required.
       type: gen_stix
       when: The ExternalReference is created.
+  entities:
+    ExternalReference:
+      attributes:
+        - description: The name of the source that the external-reference is defined
+            within (system, registry, organization, etc.).
+          identifier: true
+          name: source_name
+          type: str
+        - description: A human readable description.
+          identifier: false
+          name: description
+          type: str
+        - description: A URL reference to an external resource [RFC3986].
+          identifier: false
+          name: url
+          type: str
+        - description: Specifies a dictionary of hashes for the contents of the url.
+            This SHOULD be provided when the url property is present. Dictionary keys
+            MUST come from one of the entries listed in the hash-algorithm-ov open
+            vocabulary. As stated in Section 2.7, to ensure interoperability, a SHA-256
+            hash SHOULD be included whenever possible.
+          identifier: false
+          name: hashes
+          type: Dict
+        - description: An identifier for the external reference content.
+          identifier: true
+          name: external_id
+          type: str
+      domain: cdts/external_reference
+      name: ExternalReference
+  usecases:
+    CreateExternalReference:
+      description: Create a ExternalReference
+      entity: ExternalReference
+      name: CreateExternalReference
+      type: Create
+    ReadExternalReference:
+      description: Read a ExternalReference
+      entity: ExternalReference
+      name: ReadExternalReference
+      type: Read
+    UpdateExternalReference:
+      description: Update a ExternalReference
+      entity: ExternalReference
+      name: UpdateExternalReference
+      type: Update
+    DeleteExternalReference:
+      description: Delete a ExternalReference
+      entity: ExternalReference
+      name: DeleteExternalReference
+      type: Delete
+    ListExternalReference:
+      description: List a ExternalReference
+      entity: ExternalReference
+      name: ListExternalReference
+      type: List
