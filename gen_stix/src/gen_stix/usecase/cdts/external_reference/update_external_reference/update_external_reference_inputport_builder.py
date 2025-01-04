@@ -88,7 +88,6 @@ class UpdateExternalReferenceInputPortBuilder:
         elif type(source_name) is not str:
             raise ValueError("`source_name` must be a str.")
 
-
     def with_description(self, description: str):
         """ This function fill the description in the contract
 
@@ -124,7 +123,6 @@ class UpdateExternalReferenceInputPortBuilder:
         if description is not None:
             if type(description) is not str:
                 raise ValueError("`description` must be a str.")
-
 
     def with_url(self, url: str):
         """ This function fill the url in the contract
@@ -162,7 +160,6 @@ class UpdateExternalReferenceInputPortBuilder:
             if type(url) is not str:
                 raise ValueError("`url` must be a str.")
 
-
     def with_hashes(self, hashes: Dict):
         """ This function fill the hashes in the contract
 
@@ -198,7 +195,6 @@ class UpdateExternalReferenceInputPortBuilder:
         if hashes is not None:
             if not isinstance(hashes, Dict):
                 raise ValueError("`hashes` must be a Dict.")
-
 
     def with_external_id(self, external_id: str):
         """ This function fill the external_id in the contract
@@ -237,7 +233,6 @@ class UpdateExternalReferenceInputPortBuilder:
                 raise ValueError("`external_id` must be a str.")
             if self.__input.source_name == "capec" and not external_id.startswith("CAPEC-"):
                 raise ValueError("`external_id` with `source_name` 'capec' must be a CAPEC-[id].")
-
 
     def build(self) -> UpdateExternalReferenceInputPort:
         """ This function return the filled contract

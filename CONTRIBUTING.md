@@ -575,7 +575,7 @@ def then_attack_pattern_stix21_required_name(context):
     assert str(context["error"]) == "`name` is a required field for AttackPattern"
 ```
 
-let's do a little flake8 on top of that, i accept E501 for the test files but not for the source code.
+let's do a little flake8 on top of that, we can exclude E501, since 80char is not really a thing anymore.
 
 Next, we repeat the same process for all the other involved constraints:
 - attack_pattern_stix21_required_type

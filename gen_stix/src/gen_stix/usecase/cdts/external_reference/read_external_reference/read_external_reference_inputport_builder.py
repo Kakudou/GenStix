@@ -78,7 +78,6 @@ class ReadExternalReferenceInputPortBuilder:
         """
         raise NotImplementedError
 
-
     def with_external_id(self, external_id: str):
         """ This function fill the external_id in the contract
 
@@ -111,7 +110,6 @@ class ReadExternalReferenceInputPortBuilder:
 
         """
         raise NotImplementedError
-
 
     def build(self) -> ReadExternalReferenceInputPort:
         """ This function return the filled contract

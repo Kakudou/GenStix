@@ -51,5 +51,4 @@ class ListExternalReferenceInputPortBuilder:
 
         """
 
-
         return self.__input

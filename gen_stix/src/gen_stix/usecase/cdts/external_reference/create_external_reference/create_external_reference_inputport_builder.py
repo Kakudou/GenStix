@@ -94,7 +94,6 @@ class CreateExternalReferenceInputPortBuilder:
         elif type(source_name) is not str:
             raise ValueError("`source_name` must be a str.")
 
-
     def with_description(self, description: str):
         """ This function fill the description in the contract
 
@@ -131,7 +130,6 @@ class CreateExternalReferenceInputPortBuilder:
             if type(description) is not str:
                 raise ValueError("`description` must be a str.")
 
-
     def with_url(self, url: str):
         """ This function fill the url in the contract
 
@@ -167,7 +165,6 @@ class CreateExternalReferenceInputPortBuilder:
         if url is not None:
             if type(url) is not str:
                 raise ValueError("`url` must be a str.")
-
 
     def with_hashes(self, hashes: Dict):
         """ This function fill the hashes in the contract
@@ -207,7 +204,6 @@ class CreateExternalReferenceInputPortBuilder:
             elif not all(HashesOV.from_value(hash) for hash in hashes.keys()):
                 raise ValueError("`hashes` key must be an HashesOV.")
 
-
     def with_external_id(self, external_id: str):
         """ This function fill the external_id in the contract
 
@@ -245,7 +241,6 @@ class CreateExternalReferenceInputPortBuilder:
                 raise ValueError("`external_id` must be a str.")
             if self.__input.source_name == "capec":
                 ExternalReferenceCapec.from_name(self.__input.description)
-
 
     def build(self) -> CreateExternalReferenceInputPort:
         """ This function return the filled contract

@@ -577,7 +577,7 @@ class ExternalReferenceCapec(Enum):
     def from_name(cls, name):
         if not hasattr(cls, f"_{cls.__name__}__name_to_key"):
             cls.__name_to_key = {v.name: v for v in cls}
-        key =  cls.__name_to_key.get(name)
+        key = cls.__name_to_key.get(name)
         if key is None:
             raise ValueError(f"No external-reference CAPEC found for {name}.")
         return key
@@ -586,8 +586,7 @@ class ExternalReferenceCapec(Enum):
     def from_id(cls, id):
         if not hasattr(cls, f"_{cls.__name__}__id_to_key"):
             cls.__id_to_key = {v.value: v for v in cls}
-        key =  cls.__id_to_key.get(id)
+        key = cls.__id_to_key.get(id)
         if key is None:
             raise ValueError(f"No external-reference CAPEC found for {id}.")
         return key
-

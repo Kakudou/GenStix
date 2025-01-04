@@ -41,7 +41,6 @@ class ListExternalReferenceAdapter:
 
         """
 
-
         list_external_reference_icb = ListExternalReferenceInputPortBuilder()
         list_external_reference_ic = list_external_reference_icb\
             .create()\

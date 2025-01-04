@@ -82,7 +82,6 @@ class DeleteExternalReferenceInputPortBuilder:
         elif type(source_name) is not str:
             raise ValueError("`source_name` must be a str.")
 
-
     def with_external_id(self, external_id: str):
         """ This function fill the external_id in the contract
 
@@ -120,7 +119,6 @@ class DeleteExternalReferenceInputPortBuilder:
                 raise ValueError("`external_id` must be a str.")
             if self.__input.source_name == "capec" and not external_id.startswith("CAPEC-"):
                 raise ValueError("`external_id` with `source_name` 'capec' must be a CAPEC-[id].")
-
 
     def build(self) -> DeleteExternalReferenceInputPort:
         """ This function return the filled contract
