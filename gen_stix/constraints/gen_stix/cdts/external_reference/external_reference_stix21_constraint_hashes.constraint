@@ -1,0 +1,11 @@
+Feature: As stated in the 2.1 documentation, the hashes field must be a dictionary of valid hashes, and a SHA-256 hash SHOULD be included when possible.
+
+    Scenario Outline: Creating an ExternalReference with invalid hashes or missing a SHA-256 hash when a URL is present.
+        Given An ExternalReference is created with <source_name> and invalid <hashes>.
+        When The ExternalReference is created.
+        Then A ValueError should be raised, stating that <hashes> must be a valid dictionary of hashes with SHA-256 included when possible.
+
+        Examples:
+            | source_name | hashes               |
+            | BadHashes   | TestBadHashes        |
+            | BadHashes   | {"Test":"BadHashes"} |

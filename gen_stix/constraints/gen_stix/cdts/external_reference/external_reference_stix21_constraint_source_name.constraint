@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the source_name field, if present, must be a string.
+
+    Scenario Outline: Creating an ExternalReference with an invalid source_name.
+        Given An ExternalReference is created with an invalid <source_name>.
+        When The ExternalReference is created.
+        Then A TypeError should be raised, stating that <source_name> must be a string.
+
+        Examples:
+            | source_name                  |
+            | ["Test","bad","source_name"] |

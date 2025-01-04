@@ -15,6 +15,16 @@ project:
         and one AttackPattern should be deleted.
       type: gen_stix
       when: The AttackPattern is created, updated with <new_description>, and deleted.
+    ExternalReferenceCrudl:
+      description: CRUDL for the STIX 2.1 object ExternalReference.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name>, <description>.
+      name: ExternalReferenceCrudl
+      scenario: Performing CRUDL operations on a STIX 2.1 ExternalReference.
+      then: An ExternalReference should exist with <new_description>, and <source_name>,
+        and one ExternalReference should be deleted.
+      type: gen_stix
+      when: The ExternalReference is created, updated with <new_description> and deleted.
   constraints:
     AttackPatternCheckUnicityByTypeName:
       description: As stated by the 2.1 documentation, the fields name and type are
@@ -126,3 +136,91 @@ project:
       then: A ValueError should be raised, stating the requirements for the type field.
       type: gen_stix
       when: The AttackPattern is created.
+    ExternalReferenceStix21ConstraintCapecId:
+      description: When the source_name is "capec", the external_id field MUST be
+        formatted as CAPEC-[id].
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name> set to "capec" and
+        an invalid <external_id>.
+      name: ExternalReferenceStix21ConstraintCapecId
+      scenario: Creating an ExternalReference with source_name "capec" but an incorrectly
+        formatted external_id.
+      then: A ValueError should be raised, stating that <external_id> must be formatted
+        as CAPEC-[id].
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21ConstraintDescription:
+      description: As stated in the 2.1 documentation, the description field, if present,
+        must be a string.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name> and invalid <description>.
+      name: ExternalReferenceStix21ConstraintDescription
+      scenario: Creating an ExternalReference with an invalid description.
+      then: A TypeError should be raised, stating that <description> must be a string.
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21ConstraintExternalId:
+      description: As stated in the 2.1 documentation, the external_id field, if present,
+        must be a string.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name> and an invalid <external_id>.
+      name: ExternalReferenceStix21ConstraintExternalId
+      scenario: Creating an ExternalReference with an invalid external_id.
+      then: A TypeError should be raised, stating that <external_id> must be a string.
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21ConstraintHashes:
+      description: As stated in the 2.1 documentation, the hashes field must be a
+        dictionary of valid hashes, and a SHA-256 hash SHOULD be included when possible.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name> and invalid <hashes>.
+      name: ExternalReferenceStix21ConstraintHashes
+      scenario: Creating an ExternalReference with invalid hashes or missing a SHA-256
+        hash when a URL is present.
+      then: A ValueError should be raised, stating that <hashes> must be a valid dictionary
+        of hashes with SHA-256 included when possible.
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21ConstraintSourceName:
+      description: As stated in the 2.1 documentation, the source_name field, if present,
+        must be a string.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with an invalid <source_name>.
+      name: ExternalReferenceStix21ConstraintSourceName
+      scenario: Creating an ExternalReference with an invalid source_name.
+      then: A TypeError should be raised, stating that <source_name> must be a string.
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21ConstraintUrl:
+      description: As stated in the 2.1 documentation, the url field, if present,
+        must be a valid URL format as per RFC3986.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name> and an invalid <url>.
+      name: ExternalReferenceStix21ConstraintUrl
+      scenario: Creating an ExternalReference with an invalid url.
+      then: A ValueError should be raised, stating that <url> must conform to RFC3986.
+      type: gen_stix
+      when: The ExternalReference is created.
+    ExternalReferenceStix21OptionalFields:
+      description: The ExternalReference object should accept the following optional
+        fields description, url, hashes, and external_id.
+      domain: cdts/external_reference
+      given: An ExternalReference is created with <source_name>, <description>, <url>,
+        <hashes>, and <external_id>.
+      name: ExternalReferenceStix21OptionalFields
+      scenario: Creating an ExternalReference with all or some of the optional fields
+        populated.
+      then: The fields <description>, <url>, <hashes>, and <external_id> of the object
+        should be as provided during creation.
+      type: gen_stix
+      when: The ExternalReference is created with optional fields.
+    ExternalReferenceStix21RequiredSourceName:
+      description: As stated in the 2.1 documentation, the source_name field is required
+        and must be a string.
+      domain: cdts/external_reference
+      given: An ExternalReference is created without a <source_name>.
+      name: ExternalReferenceStix21RequiredSourceName
+      scenario: Creating an ExternalReference without a source_name.
+      then: A ValueError should be raised, stating that <source_name> is required.
+      type: gen_stix
+      when: The ExternalReference is created.

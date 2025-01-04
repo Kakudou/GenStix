@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the source_name field is required and must be a string.
+
+    Scenario Outline: Creating an ExternalReference without a source_name.
+        Given An ExternalReference is created without a <source_name>.
+        When The ExternalReference is created.
+        Then A ValueError should be raised, stating that <source_name> is required.
+
+        Examples:
+            | source_name |
+            | None        |

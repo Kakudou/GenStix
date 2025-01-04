@@ -1,0 +1,10 @@
+Feature: When the source_name is "capec", the external_id field MUST be formatted as CAPEC-[id].
+
+    Scenario Outline: Creating an ExternalReference with source_name "capec" but an incorrectly formatted external_id.
+        Given An ExternalReference is created with <source_name> set to "capec" and an invalid <external_id>.
+        When The ExternalReference is created.
+        Then A ValueError should be raised, stating that <external_id> must be formatted as CAPEC-[id].
+
+        Examples:
+            | source_name | external_id   |
+            | capec       | BadExternalId |

@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the description field, if present, must be a string.
+
+    Scenario Outline: Creating an ExternalReference with an invalid description.
+        Given An ExternalReference is created with <source_name> and invalid <description>.
+        When The ExternalReference is created.
+        Then A TypeError should be raised, stating that <description> must be a string.
+
+        Examples:
+            | source_name    | description                  |
+            | BadDescription | ["Test","bad","description"] |

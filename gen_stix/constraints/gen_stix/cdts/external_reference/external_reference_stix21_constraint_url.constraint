@@ -1,0 +1,10 @@
+Feature: As stated in the 2.1 documentation, the url field, if present, must be a valid URL format as per RFC3986.
+
+    Scenario Outline: Creating an ExternalReference with an invalid url.
+        Given An ExternalReference is created with <source_name> and an invalid <url>.
+        When The ExternalReference is created.
+        Then A ValueError should be raised, stating that <url> must conform to RFC3986.
+
+        Examples:
+            | source_name | url                  |
+            | TestBadUrl  | ["Test","bad","url"] |
