@@ -290,6 +290,8 @@ Feature: CRUDL for the STIX 2.1 object AttackPattern.
 
 2) test_attack_pattern_crudl.py
 
+<details>
+  <summary>test_attack_pattern_crudl.py</summary>
 ```python
 import os
 
@@ -354,6 +356,7 @@ def then_attack_pattern_crudl(context, new_description, name, type_):
     assert context["output_contract"]\
         .type_ == type_
 ```
+</details>
 
 As you can see, a lot of boilerplate has been written for us, so let's complete some of the missing information.
 
@@ -379,6 +382,8 @@ CRUDL features are not really atomic. I find it quite annoying to test all six f
 
 Okay, now let's add some code in the associated test.
 
+<details>
+  <summary>test_attack_pattern_crudl.py</summary>
 ```python
 import os
 
@@ -476,6 +481,7 @@ def then_attack_pattern_crudl(context, new_description, name, type_):
         assert context["output_contract"]\
             .deleted == True
 ```
+</details>
 
 I recommend creating all the constraints associated with the feature. It's easier to handle them as a bundle if they aren't too complex. I will only demonstrate one constraint in this README and not all of them. Please refer to the source code if you want to see the others.
 
@@ -518,6 +524,8 @@ The following files have been created:
 
 In this particular case, I don't need to make any changes in the constraint file, so let's write the test:
 
+<details>
+  <summary>test_attack_pattern_stix21_required_name.py</summary>
 ```python
 import os
 
@@ -574,6 +582,7 @@ def then_attack_pattern_stix21_required_name(context):
     assert type(context["error"]) == ValueError
     assert str(context["error"]) == "`name` is a required field for AttackPattern"
 ```
+</details>
 
 let's do a little flake8 on top of that, we can exclude E501, since 80char is not really a thing anymore.
 
@@ -595,3 +604,875 @@ These are particularly interesting because they validate two new entities we did
 To fulfill the constraint for AttackPattern, we need to create kill-chain-phase and external-references first. That’s what I did in my code. So for the purpose of this documentation, just know that I created these entities before proceeding to the next step with AttackPattern.
 
 You can check the related constraints and features; they are quite simple and follow the same workflow described in this documentation.
+
+
+#### Create Entity: AttackPattern
+Now we can execute our test and confirm that everything is beautifully marked in red (indicating failing tests).
+We are now ready to implement the minimum code required to make all these tests pass.
+
+To do this, let's stay organized.
+
+First, we will create the Entity using my framework. It's fairly easy:
+
+```bash
+$ BoilerplateGenerator create-entity
+let's create a new entity
+? Select one project in all of that: GenSTIX
+? What's the entity name? AttackPattern
+? What's the entity domain? sdos/attack_pattern
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? type_
+? What's the attribute description? The value of this property **MUST** be attack-pattern.
+? What's the attribute type? str
+? That attribute should be consider as an identifier? Yes
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? external_references
+? What's the attribute description? A list of external references which refer to non-STIX information.  This property MAY be used to provide one or more Attack Pattern identifiers, such as a CAPEC ID. When specifying a CAPEC ID, the source_name property of the external reference MUST be set to capec and the external_id property MUST be formatted as CAPEC-[id].
+? What's the attribute type? List
+? That attribute should be consider as an identifier? No
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? name
+? What's the attribute description? A name used to identify the Attack Pattern.
+? What's the attribute type? str
+? That attribute should be consider as an identifier? Yes
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? description
+? What's the attribute description? A description that provides more details and context about the Attack Pattern, potentially including its purpose and its key characteristics.
+? What's the attribute type? str
+? That attribute should be consider as an identifier? No
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? aliases
+? What's the attribute description? Alternative names used to identify this Attack Pattern.
+? What's the attribute type? List[str]
+? That attribute should be consider as an identifier? No
+
+? Would you like to add another attribute? Yes
+? What's the attribute name? kill_chain_phases
+? What's the attribute description? The list of Kill Chain Phases for which this Attack Pattern is used.
+? What's the attribute type? List
+? That attribute should be consider as an identifier? No
+
+? Would you like to add another attribute? No
+
+? Are you sure of the above inputs? Yes
+The entity AttackPattern has been created.
+```
+
+Next, we generate all the associated code:
+
+```bash
+$ BoilerplateGenerator generate-entity
+let's generate an entity
+? Select one project in all of that: GenSTIX
+? Select one entity in all of that: AttackPattern
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/dto/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/repository/inmemory/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/entity/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/gateway/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/cli/entity_view/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/api/entity_view/sdos/attack_pattern/
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/tui/entity_view/sdos/attack_pattern/
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/dto/sdos/attack_pattern/attack_pattern_dto.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/repository/inmemory/sdos/attack_pattern/attack_pattern_inmemory_repository.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/entity/sdos/attack_pattern/attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/gateway/sdos/attack_pattern/attack_pattern_gateway.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/cli/entity_view/sdos/attack_pattern/attack_pattern_view.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/api/entity_view/sdos/attack_pattern/attack_pattern_view.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/tui/entity_view/sdos/attack_pattern/attack_pattern_view.py
+```
+
+#### Create CRUDL UseCases
+
+Finally, we create and generate the CRUDL (Create, Read, Update, Delete, List) functionality for that entity:
+
+```bash
+$ BoilerplateGenerator create-crudl
+let's create a full CRUDL
+? Select one project in all of that: GenSTIX
+? Select one entity in all of that: AttackPattern
+-----
+
+? Are you sure you want to generate CRUDL for AttackPattern? Yes
+
+The usecase CreateAttackPattern has been created.
+The usecase ReadAttackPattern has been created.
+The usecase UpdateAttackPattern has been created.
+The usecase DeleteAttackPattern has been created.
+The usecase ListAttackPattern has been created.
+```
+
+```bash
+$ BoilerplateGenerator generate-crudl
+let's generate the CRUDL
+? Select one project in all of that: GenSTIX
+? Select one entity in all of that: AttackPattern
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/create_attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/create_attack_pattern/create_attack_pattern_adapter.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern/create_attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern/create_attack_pattern_inputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern/create_attack_pattern_inputport_builder.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern/create_attack_pattern_outputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/create_attack_pattern/create_attack_pattern_outputport_builder.py
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/read_attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/read_attack_pattern/read_attack_pattern_adapter.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern/read_attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern/read_attack_pattern_inputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern/read_attack_pattern_inputport_builder.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern/read_attack_pattern_outputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/read_attack_pattern/read_attack_pattern_outputport_builder.py
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/update_attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/update_attack_pattern/update_attack_pattern_adapter.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern/update_attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern/update_attack_pattern_inputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern/update_attack_pattern_inputport_builder.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern/update_attack_pattern_outputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/update_attack_pattern/update_attack_pattern_outputport_builder.py
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/delete_attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern_adapter.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern_inputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern_inputport_builder.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern_outputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/delete_attack_pattern/delete_attack_pattern_outputport_builder.py
+-----
+
+The following folders have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/list_attack_pattern
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern
+
+The following files have been created:
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/app/adapter/sdos/attack_pattern/list_attack_pattern/list_attack_pattern_adapter.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern/list_attack_pattern.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern/list_attack_pattern_inputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern/list_attack_pattern_inputport_builder.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern/list_attack_pattern_outputport.py
+/home/kakudou/construct/python/WiP/GenSTIX/gen_stix/src/gen_stix/usecase/sdos/attack_pattern/list_attack_pattern/list_attack_pattern_outputport_builder.py
+```
+
+As you can see, using the framework allows me to maintain peace of mind. Although I love Clean Architecture, it often requires creating a lot of classes. Automating that part is a lifesaver.
+For fun, let's run the tests at this point.
+
+
+```bash
+$ pytest
+============================================================================================ test session starts =============================================================================================
+platform linux -- Python 3.13.1, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/kakudou/construct/python/WiP/GenSTIX
+configfile: pyproject.toml
+plugins: order-1.3.0, bdd-8.1.0
+collected 44 items
+
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_check_unicity_by_type_name.py FF                                                                                           [ 10%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_aliases.py FFF                                                                                           [ 26%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_description.py FF                                                                                        [ 36%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_external_references.py F                                                                                 [ 42%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_kill_chain_phases.py F                                                                                   [ 47%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_name.py F                                                                                                [ 52%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_type.py F                                                                                                [ 57%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_optional_fields.py FFF                                                                                              [ 73%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_required_name.py F                                                                                                  [ 78%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_required_type.py F                                                                                                  [ 84%]
+gen_stix/tests/features/gen_stix/sdos/attack_pattern/test_attack_pattern_crudl.py FFF                                                                                                                  [100%]
+
+[...] 
+
+FAILED gen_stix/tests/features/gen_stix/sdos/attack_pattern/test_attack_pattern_crudl.py::test_attack_pattern_crudl[attack-pattern-AttackPattern3-AttackPattern3_desc-AttackPattern3DescToBeDeleted] - NotImplementedError
+============================================================================================= 44 failed in 0.30s =============================================================================================
+```
+
+I haven't copied the full output since it's repetitive, but essentially, we encounter a NotImplementedError. This occurs because of our input_builder, which requires implementing the checks we want to perform on the input.
+Let's take a look at create_attack_pattern_inputport_builder.py:
+
+<details>
+  <summary>create_attack_pattern_inputport_builder.py</summary>
+```python
+"""This module is the builder that ensure the filling of the input contract"""
+from dataclasses\
+    import dataclass
+from typing\
+    import Any, List
+from gen_stix.src.gen_stix.usecase.\
+    sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport\
+    import CreateAttackPatternInputPort
+
+
+@dataclass
+class CreateAttackPatternInputPortBuilder:
+    """This class defined the function to easily build the input contract
+
+    Attributes:
+    -----------
+    __input: CreateAttackPatternInputPort
+        the input contract
+
+    Functions:
+    ----------
+    create:
+        create the input contract
+    with_type_: str
+        fill the type_ in the contract
+    with_external_references: List
+        fill the external_references in the contract
+    with_name: str
+        fill the name in the contract
+    with_description: str
+        fill the description in the contract
+    with_aliases: List[str]
+        fill the aliases in the contract
+    with_kill_chain_phases: List
+        fill the kill_chain_phases in the contract
+    build:
+        build the final input contract
+
+    """
+
+    __input: Any = None
+
+    def create(self):
+        """ This function create the empty contract
+
+        Returns:
+        --------
+        CreateAttackPatternInputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self.__input = CreateAttackPatternInputPort()
+        return self
+
+    def with_type_(self, type_: str):
+        """ This function fill the type_ in the contract
+
+        Parameters:
+        -----------
+        type_: str
+            the type_ of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_type_(type_)
+        self.__input.type_ = type_
+        return self
+
+    def _validate_type_(self, type_: str):
+        """ This function check the  validity of type_ in the contract
+
+        Parameters:
+        -----------
+        type_: str
+            the type_ of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def with_external_references(self, external_references: List):
+        """ This function fill the external_references in the contract
+
+        Parameters:
+        -----------
+        external_references: List
+            the external_references of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_external_references(external_references)
+        self.__input.external_references = external_references
+        return self
+
+    def _validate_external_references(self, external_references: List):
+        """ This function check the  validity of external_references in the contract
+
+        Parameters:
+        -----------
+        external_references: List
+            the external_references of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def with_name(self, name: str):
+        """ This function fill the name in the contract
+
+        Parameters:
+        -----------
+        name: str
+            the name of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_name(name)
+        self.__input.name = name
+        return self
+
+    def _validate_name(self, name: str):
+        """ This function check the  validity of name in the contract
+
+        Parameters:
+        -----------
+        name: str
+            the name of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def with_description(self, description: str):
+        """ This function fill the description in the contract
+
+        Parameters:
+        -----------
+        description: str
+            the description of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_description(description)
+        self.__input.description = description
+        return self
+
+    def _validate_description(self, description: str):
+        """ This function check the  validity of description in the contract
+
+        Parameters:
+        -----------
+        description: str
+            the description of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def with_aliases(self, aliases: List[str]):
+        """ This function fill the aliases in the contract
+
+        Parameters:
+        -----------
+        aliases: List[str]
+            the aliases of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_aliases(aliases)
+        self.__input.aliases = aliases
+        return self
+
+    def _validate_aliases(self, aliases: List[str]):
+        """ This function check the  validity of aliases in the contract
+
+        Parameters:
+        -----------
+        aliases: List[str]
+            the aliases of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def with_kill_chain_phases(self, kill_chain_phases: List):
+        """ This function fill the kill_chain_phases in the contract
+
+        Parameters:
+        -----------
+        kill_chain_phases: List
+            the kill_chain_phases of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_kill_chain_phases(kill_chain_phases)
+        self.__input.kill_chain_phases = kill_chain_phases
+        return self
+
+    def _validate_kill_chain_phases(self, kill_chain_phases: List):
+        """ This function check the  validity of kill_chain_phases in the contract
+
+        Parameters:
+        -----------
+        kill_chain_phases: List
+            the kill_chain_phases of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+        raise NotImplementedError
+
+
+    def build(self) -> CreateAttackPatternInputPort:
+        """ This function return the filled contract
+
+        Returns:
+        --------
+        CreateAttackPatternInputPort
+            the contract filled
+
+        """
+
+        self._validate_type_(self.__input.type_)
+        self._validate_external_references(self.__input.external_references)
+        self._validate_name(self.__input.name)
+        self._validate_description(self.__input.description)
+        self._validate_aliases(self.__input.aliases)
+        self._validate_kill_chain_phases(self.__input.kill_chain_phases)
+
+        return self.__input
+```
+</details>
+
+As you can see, the builder creates several setter functions like with_xxx, which call _validate_xxx.
+Currently, _validate raises a NotImplementedError. We need to implement all the checks we outlined in our constraints within these methods.
+We'll need to do this for each inputport_builder in each CRUDL use case. For this guide, I'll only focus on the "create" use case.
+
+<details>
+  <summary>create_attack_pattern_inputport_builder.py</summary>
+```python
+"""This module is the builder that ensure the filling of the input contract"""
+from dataclasses\
+    import dataclass
+from typing\
+    import Any, List, Dict
+from gen_stix.src.gen_stix.usecase.\
+    sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport\
+    import CreateAttackPatternInputPort
+
+
+@dataclass
+class CreateAttackPatternInputPortBuilder:
+    """This class defined the function to easily build the input contract
+
+    Attributes:
+    -----------
+    __input: CreateAttackPatternInputPort
+        the input contract
+
+    Functions:
+    ----------
+    create:
+        create the input contract
+    with_type_: str
+        fill the type_ in the contract
+    with_external_references: List
+        fill the external_references in the contract
+    with_name: str
+        fill the name in the contract
+    with_description: str
+        fill the description in the contract
+    with_aliases: List[str]
+        fill the aliases in the contract
+    with_kill_chain_phases: List
+        fill the kill_chain_phases in the contract
+    build:
+        build the final input contract
+
+    """
+
+    __input: Any = None
+
+    def create(self):
+        """ This function create the empty contract
+
+        Returns:
+        --------
+        CreateAttackPatternInputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self.__input = CreateAttackPatternInputPort()
+        return self
+
+    def with_type_(self, type_: str):
+        """ This function fill the type_ in the contract
+
+        Parameters:
+        -----------
+        type_: str
+            the type_ of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_type_(type_)
+        self.__input.type_ = type_
+        return self
+
+    def _validate_type_(self, type_: str):
+        """ This function check the  validity of type_ in the contract
+
+        Parameters:
+        -----------
+        type_: str
+            the type_ of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if type_ is None or type == "":
+            raise ValueError("`type` is a required field for AttackPattern")
+        elif type_ != "attack-pattern":
+            raise ValueError("`type` must be `attack-pattern`.")
+
+    def with_external_references(self, external_references: List):
+        """ This function fill the external_references in the contract
+
+        Parameters:
+        -----------
+        external_references: List
+            the external_references of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_external_references(external_references)
+        self.__input.external_references = external_references
+        return self
+
+    def _validate_external_references(self, external_references: List):
+        """ This function check the  validity of external_references in the contract
+
+        Parameters:
+        -----------
+        external_references: List
+            the external_references of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if external_references is not None:
+            if not isinstance(external_references, List):
+                raise ValueError("`external_references` must be a List[external-reference].")
+            else:
+                for external_ref in external_references:
+                    if not isinstance(external_ref, Dict):
+                        raise ValueError("`external_references` must be a List[external-reference].")
+                    elif external_ref["source_name"] is None:
+                        raise ValueError("`external_references` must be a List[external-reference].")
+                    elif external_ref["source_name"] == "capec" and  external_ref["external_id"] is None:
+                        raise ValueError("`external_references` must be a List[external-reference].")
+                    elif external_ref["source_name"] == "capec" and not external_ref["external_id"].startswith("CAPEC-"):
+                        raise ValueError("`external_references` must be a List[external-reference].")
+                    elif external_ref["source_name"] == "":
+                        raise ValueError("`external_references` must be a List[external-reference].")
+
+
+    def with_name(self, name: str):
+        """ This function fill the name in the contract
+
+        Parameters:
+        -----------
+        name: str
+            the name of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_name(name)
+        self.__input.name = name
+        return self
+
+    def _validate_name(self, name: str):
+        """ This function check the  validity of name in the contract
+
+        Parameters:
+        -----------
+        name: str
+            the name of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if name is None or name == "":
+            raise ValueError("`name` is a required field for AttackPattern")
+        elif type(name) is not str:
+            raise ValueError("`name` must be a str.")
+
+
+
+    def with_description(self, description: str):
+        """ This function fill the description in the contract
+
+        Parameters:
+        -----------
+        description: str
+            the description of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_description(description)
+        self.__input.description = description
+        return self
+
+    def _validate_description(self, description: str):
+        """ This function check the  validity of description in the contract
+
+        Parameters:
+        -----------
+        description: str
+            the description of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if description is not None:
+            if type(description) is not str:
+                raise ValueError("`description` must be a str.")
+
+
+    def with_aliases(self, aliases: List[str]):
+        """ This function fill the aliases in the contract
+
+        Parameters:
+        -----------
+        aliases: List[str]
+            the aliases of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_aliases(aliases)
+        self.__input.aliases = aliases
+        return self
+
+    def _validate_aliases(self, aliases: List[str]):
+        """ This function check the  validity of aliases in the contract
+
+        Parameters:
+        -----------
+        aliases: List[str]
+            the aliases of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if aliases is not None:
+            if not isinstance(aliases, List):
+                raise ValueError("`aliases` must be a List[str].")
+            elif not all(isinstance(alias, str) for alias in aliases):
+                raise ValueError("`aliases` must be a List[str].")
+
+
+    def with_kill_chain_phases(self, kill_chain_phases: List):
+        """ This function fill the kill_chain_phases in the contract
+
+        Parameters:
+        -----------
+        kill_chain_phases: List
+            the kill_chain_phases of the CreateAttackPattern
+
+        Returns:
+        --------
+        CreateAttackPatternOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self._validate_kill_chain_phases(kill_chain_phases)
+        self.__input.kill_chain_phases = kill_chain_phases
+        return self
+
+    def _validate_kill_chain_phases(self, kill_chain_phases: List):
+        """ This function check the  validity of kill_chain_phases in the contract
+
+        Parameters:
+        -----------
+        kill_chain_phases: List
+            the kill_chain_phases of the CreateAttackPattern
+
+        Returns:
+        --------
+
+        """
+
+        if kill_chain_phases is not None:
+            if not isinstance(kill_chain_phases, List):
+                raise ValueError("`kill_chain_phases` must be a List[kill-chain-phase].")
+            elif not all(isinstance(kill_chain_phase, Dict) for kill_chain_phase in kill_chain_phases):
+                raise ValueError("`kill_chain_phases` must be a List[kill-chain-phase].")
+
+    def build(self) -> CreateAttackPatternInputPort:
+        """ This function return the filled contract
+
+        Returns:
+        --------
+        CreateAttackPatternInputPort
+            the contract filled
+
+        """
+
+        self._validate_type_(self.__input.type_)
+        self._validate_external_references(self.__input.external_references)
+        self._validate_name(self.__input.name)
+        self._validate_description(self.__input.description)
+        self._validate_aliases(self.__input.aliases)
+        self._validate_kill_chain_phases(self.__input.kill_chain_phases)
+
+        return self.__input
+```
+</details>
+
+
+#### Run the Tests
+Okay, now we can run the tests again with pytest:
+
+```bash
+$ pytest
+============================================================================== test session starts ==============================================================================
+platform linux -- Python 3.13.1, pytest-8.3.4, pluggy-1.5.0
+rootdir: /home/kakudou/construct/python/WiP/GenSTIX
+configfile: pyproject.toml
+plugins: bdd-8.1.0, order-1.3.0
+collected 44 items                                                                                                                                                              
+
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_capec_id.py .                                                       [  2%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_description.py .                                                    [  4%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_external_id.py .                                                    [  6%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_hashes.py ..                                                        [ 11%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_source_name.py .                                                    [ 13%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_constraint_url.py .                                                            [ 15%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_optional_fields.py ..                                                          [ 20%]
+gen_stix/tests/constraints/gen_stix/cdts/external_reference/test_external_reference_stix21_required_source_name.py .                                                      [ 22%]
+gen_stix/tests/constraints/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_check_unicity_by_phase_name_kill_chain_name.py ..                                         [ 27%]
+gen_stix/tests/constraints/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_stix21_constraint_kill_chain_name.py ..                                                   [ 31%]
+gen_stix/tests/constraints/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_stix21_constraint_phase_name.py ..                                                        [ 36%]
+gen_stix/tests/constraints/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_stix21_required_kill_chain_name.py ..                                                     [ 40%]
+gen_stix/tests/constraints/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_stix21_required_phase_name.py ..                                                          [ 45%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_check_unicity_by_type_name.py .                                                               [ 47%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_aliases.py ...                                                              [ 54%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_description.py ..                                                           [ 59%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_external_references.py .                                                    [ 61%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_kill_chain_phases.py .                                                      [ 63%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_name.py .                                                                   [ 65%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_constraint_type.py .                                                                   [ 68%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_optional_fields.py ...                                                                 [ 75%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_required_name.py .                                                                     [ 77%]
+gen_stix/tests/constraints/gen_stix/sdos/attack_pattern/test_attack_pattern_stix21_required_type.py .                                                                     [ 79%]
+gen_stix/tests/features/gen_stix/cdts/external_reference/test_external_reference_crudl.py ...                                                                             [ 86%]
+gen_stix/tests/features/gen_stix/cdts/kill_chain_phase/test_kill_chain_phase_crudl.py ...                                                                                 [ 93%]
+gen_stix/tests/features/gen_stix/sdos/attack_pattern/test_attack_pattern_crudl.py ...                                                                                     [100%]
+
+============================================================================== 44 passed in 0.35s ===============================================================================
+```
+
+And everything works as expected!
+Our CoreEngine is complete for the AttackPattern entity.
+
+#### Next Steps: Generate STIX 2.1 Objects from the CLI
+
+Let’s keep in mind our end goal: generating AttackPattern objects in STIX 2.1 format from a CLI call.
+At this point, we can only create a Python object representation of STIX 2.1 through code.
+Our next step is to convert this into a STIX 2.1 object and enable this functionality via a CLI call.
+
+

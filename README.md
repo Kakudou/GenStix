@@ -138,7 +138,7 @@ After creating objects, you can bundle and export them as JSON for further use i
 ## **Supported STIX 2.1 Objects**  
 
 ### **STIX Domain Objects (SDOs)**  
-- [ ] Attack Pattern
+- [x] Attack Pattern
 - [ ] Campaign  
 - [ ] Course of Action  
 - [ ] Grouping  
