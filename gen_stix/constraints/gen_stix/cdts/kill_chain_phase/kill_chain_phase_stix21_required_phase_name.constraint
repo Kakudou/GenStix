@@ -1,0 +1,11 @@
+Feature: The phase_name is a required field.
+
+    Scenario Outline: Creating a Kill Chain Phase without a phase_name.
+        Given A Kill Chain Phase is created without a <phase_name> and a valid <kill_chain_name>.
+        When A Kill Chain Phase is created.
+        Then A ValueError should be raised, stating that the phase_name is required.
+
+        Examples:
+            | kill_chain_name   | phase_name |
+            | kill-chain-name-1 | none       |
+            | kill-chain-name-2 | none       |

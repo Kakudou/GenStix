@@ -1,0 +1,11 @@
+Feature: The combination of kill_chain_name and phase_name must be unique.
+
+    Scenario Outline: Creating multiple Kill Chain Phases with the same kill_chain_name and phase_name.
+        Given Multiple Kill Chain Phases are created with the same <kill_chain_name> and <phase_name>.
+        When A Kill Chain Phase is created.
+        Then A NameError exception should be raised with the message 'The Kill Chain Phase you want already exists'.
+
+        Examples:
+            | kill_chain_name           | phase_name          |
+            | unicity-kill-chain-name-1 | unicity-phase-name1 |
+            | unicity-kill-chain-name-2 | unicity-phase-name2 |
