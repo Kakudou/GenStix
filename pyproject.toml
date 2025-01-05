@@ -25,7 +25,12 @@ dependencies = []
 dynamic = ["version", "readme"]
 
 [project.optional-dependencies]
-dev = ["flake8", "autopep8", "pynvim", "pytest-bdd", "pytest-order"]
+dev = ["flake8",
+       "black",
+       "pre-commit",
+       "pynvim",
+       "pytest-bdd",
+       "pytest-order"]
 
 [project.scripts]
 GenStix = "gen_stix.__main__:gen_stix"
@@ -34,3 +39,19 @@ GenStix = "gen_stix.__main__:gen_stix"
 version = {attr = "gen_stix.src.VERSION"}
 readme = {file = ["README.md"]}
 
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

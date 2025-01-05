@@ -1,21 +1,20 @@
 """This module is the core logic to create a Entity"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
 
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.create_external_reference.create_external_reference_inputport\
-    import CreateExternalReferenceInputPort
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.create_external_reference.create_external_reference_outputport_builder\
-    import CreateExternalReferenceOutputPortBuilder
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.create_external_reference.create_external_reference_outputport\
-    import CreateExternalReferenceOutputPort
-from gen_stix.src.gen_stix.entity.\
-    cdts.external_reference.external_reference\
-    import ExternalReference
+from dataclasses import dataclass
+from typing import Any
+
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.create_external_reference.create_external_reference_inputport import (
+    CreateExternalReferenceInputPort,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.create_external_reference.create_external_reference_outputport_builder import (
+    CreateExternalReferenceOutputPortBuilder,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.create_external_reference.create_external_reference_outputport import (
+    CreateExternalReferenceOutputPort,
+)
+from gen_stix.src.gen_stix.entity.cdts.external_reference.external_reference import (
+    ExternalReference,
+)
 
 
 @dataclass
@@ -51,7 +50,9 @@ class CreateExternalReference:
         self.gateway = implemented_gateway
         self.builder = CreateExternalReferenceOutputPortBuilder()
 
-    def execute(self, inputp: CreateExternalReferenceInputPort) -> CreateExternalReferenceOutputPort:
+    def execute(
+        self, inputp: CreateExternalReferenceInputPort
+    ) -> CreateExternalReferenceOutputPort:
         """This function will from the inputport create a ExternalReference
         and save it if none with the same identifier is found.
         And then return the appropriate outputport.
@@ -96,13 +97,15 @@ class CreateExternalReference:
             executed = self.gateway.save(external_reference)
 
         if executed:
-            self.__output = self.builder.create()\
-                                .with_source_name(external_reference.source_name)\
-                                .with_description(external_reference.description)\
-                                .with_url(external_reference.url)\
-                                .with_hashes(external_reference.hashes)\
-                                .with_external_id(external_reference.external_id)\
-                                .build()
+            self.__output = (
+                self.builder.create()
+                .with_source_name(external_reference.source_name)
+                .with_description(external_reference.description)
+                .with_url(external_reference.url)
+                .with_hashes(external_reference.hashes)
+                .with_external_id(external_reference.external_id)
+                .build()
+            )
 
         elif not executed and external_reference is None:
             if error is None:

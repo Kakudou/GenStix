@@ -1,10 +1,7 @@
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+from dataclasses import dataclass
+from typing import Dict
 
-from gen_stix.src.utils.singleton\
-    import Singleton
+from gen_stix.src.utils.singleton import Singleton
 
 
 @Singleton

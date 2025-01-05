@@ -1,29 +1,26 @@
 """This module handle the data access in memory"""
-from hashlib\
-    import sha256
-from typing\
-    import List
 
-from gen_stix.src.utils.\
-    singleton\
-    import Singleton
-from gen_stix.src.app.\
-    dto.cdts.external_reference.external_reference_dto\
-    import ExternalReferenceDTO
-from gen_stix.src.gen_stix.gateway.\
-    cdts.external_reference.external_reference_gateway\
-    import ExternalReferenceGateway
-from gen_stix.src.gen_stix.entity.\
-    cdts.external_reference.external_reference\
-    import ExternalReference
-from gen_stix.src.app.\
-    repository.inmemory.inmemory_persist\
-    import InMemoryPersist
+from hashlib import sha256
+from typing import List
+
+from gen_stix.src.utils.singleton import Singleton
+from gen_stix.src.app.dto.cdts.external_reference.external_reference_dto import (
+    ExternalReferenceDTO,
+)
+from gen_stix.src.gen_stix.gateway.cdts.external_reference.external_reference_gateway import (
+    ExternalReferenceGateway,
+)
+from gen_stix.src.gen_stix.entity.cdts.external_reference.external_reference import (
+    ExternalReference,
+)
+from gen_stix.src.app.repository.inmemory.inmemory_persist import (
+    InMemoryPersist,
+)
 
 
 @Singleton
 class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
-    """"This class implement the ExternalReferenceGateway
+    """ "This class implement the ExternalReferenceGateway
 
     Functions:
     ----------
@@ -88,7 +85,9 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
         saved = False
 
         external_reference_dto = self._convert_to_dto(external_reference)
-        self.__persists.external_references[external_reference_dto.id] = external_reference_dto
+        self.__persists.external_references[external_reference_dto.id] = (
+            external_reference_dto
+        )
 
         saved = True
 
@@ -123,7 +122,9 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
 
         return exist
 
-    def update_by_identifier(self, identifier: str, external_reference: ExternalReference) -> bool:
+    def update_by_identifier(
+        self, identifier: str, external_reference: ExternalReference
+    ) -> bool:
         """This function will update ExternalReference
 
         Parameters:
@@ -143,7 +144,9 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
         updated = False
 
         external_reference_dto = self._convert_to_dto(external_reference)
-        self.__persists.external_references[external_reference_dto.id] = external_reference_dto
+        self.__persists.external_references[external_reference_dto.id] = (
+            external_reference_dto
+        )
 
         updated = True
 
@@ -164,8 +167,12 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
 
         external_references = []
         for external_reference_id in self.__persists.external_references:
-            external_reference_dto = self.__persists.external_references[external_reference_id]
-            external_reference = self._convert_to_entity(external_reference_dto)
+            external_reference_dto = self.__persists.external_references[
+                external_reference_id
+            ]
+            external_reference = self._convert_to_entity(
+                external_reference_dto
+            )
             external_references.append(external_reference)
 
         return external_references
@@ -190,12 +197,16 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
         hash_id = sha256(str(identifier).encode()).hexdigest()
 
         try:
-            external_reference_dto = self.__persists.external_references[hash_id]
+            external_reference_dto = self.__persists.external_references[
+                hash_id
+            ]
         except KeyError:
             external_reference_dto = None
 
         if external_reference_dto is not None:
-            external_reference = self._convert_to_entity(external_reference_dto)
+            external_reference = self._convert_to_entity(
+                external_reference_dto
+            )
 
         return external_reference
 
@@ -223,7 +234,9 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
 
         return deleted
 
-    def _convert_to_dto(self, external_reference: ExternalReference) -> ExternalReferenceDTO:
+    def _convert_to_dto(
+        self, external_reference: ExternalReference
+    ) -> ExternalReferenceDTO:
         """This function will convert ExternalReference to a ExternalReferenceDTO
 
         Parameters:
@@ -238,7 +251,10 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
 
         """
 
-        identifier = (external_reference.source_name, external_reference.external_id)
+        identifier = (
+            external_reference.source_name,
+            external_reference.external_id,
+        )
 
         external_reference_dto = ExternalReferenceDTO()
         external_reference_dto.id = self._generate_id(identifier)
@@ -250,7 +266,9 @@ class ExternalReferenceINMEMORYRepository(ExternalReferenceGateway):
 
         return external_reference_dto
 
-    def _convert_to_entity(self, external_reference_dto: ExternalReferenceDTO) -> ExternalReference:
+    def _convert_to_entity(
+        self, external_reference_dto: ExternalReferenceDTO
+    ) -> ExternalReference:
         """This function will convert a ExternalReferenceDTO to ExternalReference
 
         Parameters:

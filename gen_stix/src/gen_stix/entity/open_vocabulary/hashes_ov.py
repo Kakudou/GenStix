@@ -1,6 +1,6 @@
 """This enum will contains all the hashes OpenVocabulary"""
-from enum\
-    import Enum
+
+from enum import Enum
 
 
 class HashesOV(Enum):

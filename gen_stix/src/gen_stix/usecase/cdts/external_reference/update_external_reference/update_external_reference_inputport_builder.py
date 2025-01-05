@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the input contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any, Dict
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.update_external_reference.update_external_reference_inputport\
-    import UpdateExternalReferenceInputPort
+
+from dataclasses import dataclass
+from typing import Any, Dict
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.update_external_reference.update_external_reference_inputport import (
+    UpdateExternalReferenceInputPort,
+)
 
 
 @dataclass
@@ -39,7 +38,7 @@ class UpdateExternalReferenceInputPortBuilder:
     __input: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -52,7 +51,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def with_source_name(self, source_name: str):
-        """ This function fill the source_name in the contract
+        """This function fill the source_name in the contract
 
         Parameters:
         -----------
@@ -71,7 +70,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def _validate_source_name(self, source_name: str):
-        """ This function check the  validity of source_name in the contract
+        """This function check the  validity of source_name in the contract
 
         Parameters:
         -----------
@@ -84,12 +83,14 @@ class UpdateExternalReferenceInputPortBuilder:
         """
 
         if source_name is None or type == "":
-            raise ValueError("`source_name` is a required field for ExternalReference")
+            raise ValueError(
+                "`source_name` is a required field for ExternalReference"
+            )
         elif type(source_name) is not str:
             raise ValueError("`source_name` must be a str.")
 
     def with_description(self, description: str):
-        """ This function fill the description in the contract
+        """This function fill the description in the contract
 
         Parameters:
         -----------
@@ -108,7 +109,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def _validate_description(self, description: str):
-        """ This function check the  validity of description in the contract
+        """This function check the  validity of description in the contract
 
         Parameters:
         -----------
@@ -125,7 +126,7 @@ class UpdateExternalReferenceInputPortBuilder:
                 raise ValueError("`description` must be a str.")
 
     def with_url(self, url: str):
-        """ This function fill the url in the contract
+        """This function fill the url in the contract
 
         Parameters:
         -----------
@@ -144,7 +145,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def _validate_url(self, url: str):
-        """ This function check the  validity of url in the contract
+        """This function check the  validity of url in the contract
 
         Parameters:
         -----------
@@ -161,7 +162,7 @@ class UpdateExternalReferenceInputPortBuilder:
                 raise ValueError("`url` must be a str.")
 
     def with_hashes(self, hashes: Dict):
-        """ This function fill the hashes in the contract
+        """This function fill the hashes in the contract
 
         Parameters:
         -----------
@@ -180,7 +181,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def _validate_hashes(self, hashes: Dict):
-        """ This function check the  validity of hashes in the contract
+        """This function check the  validity of hashes in the contract
 
         Parameters:
         -----------
@@ -197,7 +198,7 @@ class UpdateExternalReferenceInputPortBuilder:
                 raise ValueError("`hashes` must be a Dict.")
 
     def with_external_id(self, external_id: str):
-        """ This function fill the external_id in the contract
+        """This function fill the external_id in the contract
 
         Parameters:
         -----------
@@ -216,7 +217,7 @@ class UpdateExternalReferenceInputPortBuilder:
         return self
 
     def _validate_external_id(self, external_id: str):
-        """ This function check the  validity of external_id in the contract
+        """This function check the  validity of external_id in the contract
 
         Parameters:
         -----------
@@ -231,11 +232,16 @@ class UpdateExternalReferenceInputPortBuilder:
         if external_id is not None:
             if type(external_id) is not str:
                 raise ValueError("`external_id` must be a str.")
-            if self.__input.source_name == "capec" and not external_id.startswith("CAPEC-"):
-                raise ValueError("`external_id` with `source_name` 'capec' must be a CAPEC-[id].")
+            if (
+                self.__input.source_name == "capec"
+                and not external_id.startswith("CAPEC-")
+            ):
+                raise ValueError(
+                    "`external_id` with `source_name` 'capec' must be a CAPEC-[id]."
+                )
 
     def build(self) -> UpdateExternalReferenceInputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

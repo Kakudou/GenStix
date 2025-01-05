@@ -1,15 +1,13 @@
 """ This module use the usecase ReadExternalReference"""
-from typing\
-    import Dict
 
-from gen_stix.src\
-    import STORAGE_ENGINE
+from typing import Dict
 
-from gen_stix.src.utils.container\
-    import Container
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_inputport_builder\
-    import ReadExternalReferenceInputPortBuilder
+from gen_stix.src import STORAGE_ENGINE
+
+from gen_stix.src.utils.container import Container
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_inputport_builder import (
+    ReadExternalReferenceInputPortBuilder,
+)
 
 
 class ReadExternalReferenceAdapter:
@@ -49,14 +47,15 @@ class ReadExternalReferenceAdapter:
         sanitize_external_id = inputs["external_id"]
 
         read_external_reference_icb = ReadExternalReferenceInputPortBuilder()
-        read_external_reference_ic = read_external_reference_icb\
-            .create()\
-            .with_source_name(sanitize_source_name)\
-            .with_external_id(sanitize_external_id)\
+        read_external_reference_ic = (
+            read_external_reference_icb.create()
+            .with_source_name(sanitize_source_name)
+            .with_external_id(sanitize_external_id)
             .build()
+        )
 
-        read_external_reference_oc = Container\
-            .get_usecase_repo("ReadExternalReference", storage_engine)\
-            .execute(read_external_reference_ic)
+        read_external_reference_oc = Container.get_usecase_repo(
+            "ReadExternalReference", storage_engine
+        ).execute(read_external_reference_ic)
 
         return read_external_reference_oc

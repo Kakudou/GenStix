@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the output contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any, List
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.list_external_reference.list_external_reference_outputport\
-    import ListExternalReferenceOutputPort
+
+from dataclasses import dataclass
+from typing import Any, List
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.list_external_reference.list_external_reference_outputport import (
+    ListExternalReferenceOutputPort,
+)
 
 
 @dataclass
@@ -33,7 +32,7 @@ class ListExternalReferenceOutputPortBuilder:
     __output: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -46,7 +45,7 @@ class ListExternalReferenceOutputPortBuilder:
         return self
 
     def with_all_external_references(self, all_external_references: List[str]):
-        """ This function fill the all_external_references in the contract
+        """This function fill the all_external_references in the contract
 
         Parameters:
         -----------
@@ -64,7 +63,7 @@ class ListExternalReferenceOutputPortBuilder:
         return self
 
     def with_error(self, error: str):
-        """ This function fill the error in the contract
+        """This function fill the error in the contract
 
         Parameters:
         -----------
@@ -82,7 +81,7 @@ class ListExternalReferenceOutputPortBuilder:
         return self
 
     def build(self) -> ListExternalReferenceOutputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

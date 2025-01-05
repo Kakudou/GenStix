@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the output contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.delete_external_reference.delete_external_reference_outputport\
-    import DeleteExternalReferenceOutputPort
+
+from dataclasses import dataclass
+from typing import Any
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.delete_external_reference.delete_external_reference_outputport import (
+    DeleteExternalReferenceOutputPort,
+)
 
 
 @dataclass
@@ -33,7 +32,7 @@ class DeleteExternalReferenceOutputPortBuilder:
     __output: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -46,7 +45,7 @@ class DeleteExternalReferenceOutputPortBuilder:
         return self
 
     def with_deleted(self, deleted: bool):
-        """ This function fill the deleted in the contract
+        """This function fill the deleted in the contract
 
         Parameters:
         -----------
@@ -64,7 +63,7 @@ class DeleteExternalReferenceOutputPortBuilder:
         return self
 
     def with_error(self, error: str):
-        """ This function fill the error in the contract
+        """This function fill the error in the contract
 
         Parameters:
         -----------
@@ -82,7 +81,7 @@ class DeleteExternalReferenceOutputPortBuilder:
         return self
 
     def build(self) -> DeleteExternalReferenceOutputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

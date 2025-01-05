@@ -1,5 +1,6 @@
 """This module is probably one of the most important,\
     allow me to dynamically import usecase with the good storage engine"""
+
 import os
 import re
 
@@ -39,12 +40,12 @@ class Container:
         """
 
         entity_name = ""
-        uc_snake = re.sub(r'(?!^)([A-Z]+)', r'_\1', usecase_name).lower()
+        uc_snake = re.sub(r"(?!^)([A-Z]+)", r"_\1", usecase_name).lower()
 
         for a, b, c in os.walk("gen_stix/src/gen_stix/entity"):
             if "__pycache__" not in a:
                 for file in c:
-                    entity_snakecase = re.split(r'\.py', file)[0]
+                    entity_snakecase = re.split(r"\.py", file)[0]
                     if entity_snakecase in uc_snake:
                         entity_name = entity_snakecase
                         break
@@ -67,10 +68,9 @@ class Container:
         """
 
         klass = None
-        uc_snake = re.sub(r'(?!^)([A-Z]+)', r'_\1', usecase_name).lower()
+        uc_snake = re.sub(r"(?!^)([A-Z]+)", r"_\1", usecase_name).lower()
 
-        for a, b, c in os.walk("gen_stix"
-                               "/src/gen_stix/usecase"):
+        for a, b, c in os.walk("gen_stix" "/src/gen_stix/usecase"):
             for file in c:
                 if file == f"{uc_snake}.py":
                     module = import_module(f"{a.replace('/', '.')}.{uc_snake}")
@@ -97,14 +97,16 @@ class Container:
         """
 
         klassrepo = None
-        entity = ''.join(word.title() for word in entity_name.split('_'))
+        entity = "".join(word.title() for word in entity_name.split("_"))
 
         for a, b, c in os.walk("gen_stix/src/app/repository"):
             for file in c:
                 if file == f"{entity_name}_{method.lower()}_repository.py":
-                    module = import_module(f"{a.replace('/', '.')}"
-                                           f".{entity_name}_"
-                                           f"{method.lower()}_repository")
+                    module = import_module(
+                        f"{a.replace('/', '.')}"
+                        f".{entity_name}_"
+                        f"{method.lower()}_repository"
+                    )
                     klassrepo = getattr(module, f"{entity}{method}Repository")
 
         return klassrepo

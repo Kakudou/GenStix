@@ -1,15 +1,13 @@
 """ This module use the usecase DeleteExternalReference"""
-from typing\
-    import Dict
 
-from gen_stix.src\
-    import STORAGE_ENGINE
+from typing import Dict
 
-from gen_stix.src.utils.container\
-    import Container
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.delete_external_reference.delete_external_reference_inputport_builder\
-    import DeleteExternalReferenceInputPortBuilder
+from gen_stix.src import STORAGE_ENGINE
+
+from gen_stix.src.utils.container import Container
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.delete_external_reference.delete_external_reference_inputport_builder import (
+    DeleteExternalReferenceInputPortBuilder,
+)
 
 
 class DeleteExternalReferenceAdapter:
@@ -48,15 +46,18 @@ class DeleteExternalReferenceAdapter:
         sanitize_source_name = inputs["source_name"]
         sanitize_external_id = inputs["external_id"]
 
-        delete_external_reference_icb = DeleteExternalReferenceInputPortBuilder()
-        delete_external_reference_ic = delete_external_reference_icb\
-            .create()\
-            .with_source_name(sanitize_source_name)\
-            .with_external_id(sanitize_external_id)\
+        delete_external_reference_icb = (
+            DeleteExternalReferenceInputPortBuilder()
+        )
+        delete_external_reference_ic = (
+            delete_external_reference_icb.create()
+            .with_source_name(sanitize_source_name)
+            .with_external_id(sanitize_external_id)
             .build()
+        )
 
-        delete_external_reference_oc = Container\
-            .get_usecase_repo("DeleteExternalReference", storage_engine)\
-            .execute(delete_external_reference_ic)
+        delete_external_reference_oc = Container.get_usecase_repo(
+            "DeleteExternalReference", storage_engine
+        ).execute(delete_external_reference_ic)
 
         return delete_external_reference_oc

@@ -1,13 +1,12 @@
 """"This module define the input contract to create a UpdateExternalReference"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass
 class UpdateExternalReferenceInputPort:
-    """"This class define the necessary attributes to create a ExternalReference
+    """ "This class define the necessary attributes to create a ExternalReference
 
     Attributes:
     -----------

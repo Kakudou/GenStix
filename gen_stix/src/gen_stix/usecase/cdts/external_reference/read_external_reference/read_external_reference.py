@@ -1,18 +1,17 @@
 """This module is the core logic to create a Entity"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
 
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_inputport\
-    import ReadExternalReferenceInputPort
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_outputport_builder\
-    import ReadExternalReferenceOutputPortBuilder
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_outputport\
-    import ReadExternalReferenceOutputPort
+from dataclasses import dataclass
+from typing import Any
+
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_inputport import (
+    ReadExternalReferenceInputPort,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_outputport_builder import (
+    ReadExternalReferenceOutputPortBuilder,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_outputport import (
+    ReadExternalReferenceOutputPort,
+)
 
 
 @dataclass
@@ -48,7 +47,9 @@ class ReadExternalReference:
         self.gateway = implemented_gateway
         self.builder = ReadExternalReferenceOutputPortBuilder()
 
-    def execute(self, inputp: ReadExternalReferenceInputPort) -> ReadExternalReferenceOutputPort:
+    def execute(
+        self, inputp: ReadExternalReferenceInputPort
+    ) -> ReadExternalReferenceOutputPort:
         """This function will from the inputport create a ExternalReference
         and save it if none with the same identifier is found.
         And then return the appropriate outputport.
@@ -83,13 +84,15 @@ class ReadExternalReference:
             self.__output = self.builder.create().with_error(error).build()
 
         if executed:
-            self.__output = self.builder.create()\
-                                .with_source_name(external_reference.source_name)\
-                                .with_description(external_reference.description)\
-                                .with_url(external_reference.url)\
-                                .with_hashes(external_reference.hashes)\
-                                .with_external_id(external_reference.external_id)\
-                                .build()
+            self.__output = (
+                self.builder.create()
+                .with_source_name(external_reference.source_name)
+                .with_description(external_reference.description)
+                .with_url(external_reference.url)
+                .with_hashes(external_reference.hashes)
+                .with_external_id(external_reference.external_id)
+                .build()
+            )
 
         elif not executed and external_reference is None:
             if error is None:

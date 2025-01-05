@@ -1,18 +1,17 @@
 """This module is the core logic to create a Entity"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
 
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.delete_external_reference.delete_external_reference_inputport\
-    import DeleteExternalReferenceInputPort
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.delete_external_reference.delete_external_reference_outputport_builder\
-    import DeleteExternalReferenceOutputPortBuilder
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.delete_external_reference.delete_external_reference_outputport\
-    import DeleteExternalReferenceOutputPort
+from dataclasses import dataclass
+from typing import Any
+
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.delete_external_reference.delete_external_reference_inputport import (
+    DeleteExternalReferenceInputPort,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.delete_external_reference.delete_external_reference_outputport_builder import (
+    DeleteExternalReferenceOutputPortBuilder,
+)
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.delete_external_reference.delete_external_reference_outputport import (
+    DeleteExternalReferenceOutputPort,
+)
 
 
 @dataclass
@@ -48,7 +47,9 @@ class DeleteExternalReference:
         self.gateway = implemented_gateway
         self.builder = DeleteExternalReferenceOutputPortBuilder()
 
-    def execute(self, inputp: DeleteExternalReferenceInputPort) -> DeleteExternalReferenceOutputPort:
+    def execute(
+        self, inputp: DeleteExternalReferenceInputPort
+    ) -> DeleteExternalReferenceOutputPort:
         """This function will from the inputport create a ExternalReference
         and save it if none with the same identifier is found.
         And then return the appropriate outputport.
@@ -74,7 +75,9 @@ class DeleteExternalReference:
 
         identifier = (source_name, external_id)
 
-        external_reference_deleted = self.gateway.destroy_by_identifier(identifier)
+        external_reference_deleted = self.gateway.destroy_by_identifier(
+            identifier
+        )
 
         if external_reference_deleted:
             error = "This Entity ExternalReference, doesn't look like to exist in GenSTIX"
@@ -83,9 +86,11 @@ class DeleteExternalReference:
             external_reference = True
 
         if executed:
-            self.__output = self.builder.create()\
-                                .with_deleted(external_reference_deleted)\
-                                .build()
+            self.__output = (
+                self.builder.create()
+                .with_deleted(external_reference_deleted)
+                .build()
+            )
 
         elif not executed and external_reference is None:
             if error is None:

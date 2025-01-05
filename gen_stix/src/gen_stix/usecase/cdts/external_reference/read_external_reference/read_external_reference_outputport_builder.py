@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the output contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any, Dict
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_outputport\
-    import ReadExternalReferenceOutputPort
+
+from dataclasses import dataclass
+from typing import Any, Dict
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_outputport import (
+    ReadExternalReferenceOutputPort,
+)
 
 
 @dataclass
@@ -41,7 +40,7 @@ class ReadExternalReferenceOutputPortBuilder:
     __output: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -54,7 +53,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_source_name(self, source_name: str):
-        """ This function fill the source_name in the contract
+        """This function fill the source_name in the contract
 
         Parameters:
         -----------
@@ -72,7 +71,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_description(self, description: str):
-        """ This function fill the description in the contract
+        """This function fill the description in the contract
 
         Parameters:
         -----------
@@ -90,7 +89,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_url(self, url: str):
-        """ This function fill the url in the contract
+        """This function fill the url in the contract
 
         Parameters:
         -----------
@@ -108,7 +107,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_hashes(self, hashes: Dict):
-        """ This function fill the hashes in the contract
+        """This function fill the hashes in the contract
 
         Parameters:
         -----------
@@ -126,7 +125,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_external_id(self, external_id: str):
-        """ This function fill the external_id in the contract
+        """This function fill the external_id in the contract
 
         Parameters:
         -----------
@@ -144,7 +143,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def with_error(self, error: str):
-        """ This function fill the error in the contract
+        """This function fill the error in the contract
 
         Parameters:
         -----------
@@ -162,7 +161,7 @@ class ReadExternalReferenceOutputPortBuilder:
         return self
 
     def build(self) -> ReadExternalReferenceOutputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

@@ -1,8 +1,7 @@
 """"This module define the output contract to create a CreateExternalReference"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass

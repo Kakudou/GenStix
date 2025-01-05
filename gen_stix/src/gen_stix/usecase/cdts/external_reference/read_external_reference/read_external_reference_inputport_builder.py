@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the input contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.read_external_reference.read_external_reference_inputport\
-    import ReadExternalReferenceInputPort
+
+from dataclasses import dataclass
+from typing import Any
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_inputport import (
+    ReadExternalReferenceInputPort,
+)
 
 
 @dataclass
@@ -33,7 +32,7 @@ class ReadExternalReferenceInputPortBuilder:
     __input: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -46,7 +45,7 @@ class ReadExternalReferenceInputPortBuilder:
         return self
 
     def with_source_name(self, source_name: str):
-        """ This function fill the source_name in the contract
+        """This function fill the source_name in the contract
 
         Parameters:
         -----------
@@ -65,7 +64,7 @@ class ReadExternalReferenceInputPortBuilder:
         return self
 
     def _validate_source_name(self, source_name: str):
-        """ This function check the  validity of source_name in the contract
+        """This function check the  validity of source_name in the contract
 
         Parameters:
         -----------
@@ -79,7 +78,7 @@ class ReadExternalReferenceInputPortBuilder:
         raise NotImplementedError
 
     def with_external_id(self, external_id: str):
-        """ This function fill the external_id in the contract
+        """This function fill the external_id in the contract
 
         Parameters:
         -----------
@@ -98,7 +97,7 @@ class ReadExternalReferenceInputPortBuilder:
         return self
 
     def _validate_external_id(self, external_id: str):
-        """ This function check the  validity of external_id in the contract
+        """This function check the  validity of external_id in the contract
 
         Parameters:
         -----------
@@ -112,7 +111,7 @@ class ReadExternalReferenceInputPortBuilder:
         raise NotImplementedError
 
     def build(self) -> ReadExternalReferenceInputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

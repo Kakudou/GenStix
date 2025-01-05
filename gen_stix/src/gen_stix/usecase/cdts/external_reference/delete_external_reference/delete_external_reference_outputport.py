@@ -1,6 +1,6 @@
 """"This module define the output contract to create a DeleteExternalReference"""
-from dataclasses\
-    import dataclass
+
+from dataclasses import dataclass
 
 
 @dataclass

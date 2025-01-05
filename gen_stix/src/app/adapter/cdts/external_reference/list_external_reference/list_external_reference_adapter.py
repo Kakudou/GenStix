@@ -1,15 +1,13 @@
 """ This module use the usecase ListExternalReference"""
-from typing\
-    import Dict
 
-from gen_stix.src\
-    import STORAGE_ENGINE
+from typing import Dict
 
-from gen_stix.src.utils.container\
-    import Container
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.list_external_reference.list_external_reference_inputport_builder\
-    import ListExternalReferenceInputPortBuilder
+from gen_stix.src import STORAGE_ENGINE
+
+from gen_stix.src.utils.container import Container
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.list_external_reference.list_external_reference_inputport_builder import (
+    ListExternalReferenceInputPortBuilder,
+)
 
 
 class ListExternalReferenceAdapter:
@@ -42,12 +40,12 @@ class ListExternalReferenceAdapter:
         """
 
         list_external_reference_icb = ListExternalReferenceInputPortBuilder()
-        list_external_reference_ic = list_external_reference_icb\
-            .create()\
-            .build()
+        list_external_reference_ic = (
+            list_external_reference_icb.create().build()
+        )
 
-        list_external_reference_oc = Container\
-            .get_usecase_repo("ListExternalReference", storage_engine)\
-            .execute(list_external_reference_ic)
+        list_external_reference_oc = Container.get_usecase_repo(
+            "ListExternalReference", storage_engine
+        ).execute(list_external_reference_ic)
 
         return list_external_reference_oc

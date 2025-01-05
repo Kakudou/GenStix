@@ -1,11 +1,10 @@
 """This module is the builder that ensure the filling of the input contract"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Any
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.list_external_reference.list_external_reference_inputport\
-    import ListExternalReferenceInputPort
+
+from dataclasses import dataclass
+from typing import Any
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.list_external_reference.list_external_reference_inputport import (
+    ListExternalReferenceInputPort,
+)
 
 
 @dataclass
@@ -29,7 +28,7 @@ class ListExternalReferenceInputPortBuilder:
     __input: Any = None
 
     def create(self):
-        """ This function create the empty contract
+        """This function create the empty contract
 
         Returns:
         --------
@@ -42,7 +41,7 @@ class ListExternalReferenceInputPortBuilder:
         return self
 
     def build(self) -> ListExternalReferenceInputPort:
-        """ This function return the filled contract
+        """This function return the filled contract
 
         Returns:
         --------

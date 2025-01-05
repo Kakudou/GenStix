@@ -1,11 +1,11 @@
 """"This module define the input contract to create a DeleteExternalReference"""
-from dataclasses\
-    import dataclass
+
+from dataclasses import dataclass
 
 
 @dataclass
 class DeleteExternalReferenceInputPort:
-    """"This class define the necessary attributes to create a ExternalReference
+    """ "This class define the necessary attributes to create a ExternalReference
 
     Attributes:
     -----------

@@ -1,8 +1,7 @@
 """This module is the ExternalReferenceDTO that will be persist"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass

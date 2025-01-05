@@ -1,8 +1,7 @@
 """This module is the ExternalReference that will be shown"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass

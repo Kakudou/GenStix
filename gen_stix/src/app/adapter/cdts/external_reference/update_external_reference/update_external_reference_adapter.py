@@ -1,15 +1,13 @@
 """ This module use the usecase UpdateExternalReference"""
-from typing\
-    import Dict
 
-from gen_stix.src\
-    import STORAGE_ENGINE
+from typing import Dict
 
-from gen_stix.src.utils.container\
-    import Container
-from gen_stix.src.gen_stix.usecase.\
-    cdts.external_reference.update_external_reference.update_external_reference_inputport_builder\
-    import UpdateExternalReferenceInputPortBuilder
+from gen_stix.src import STORAGE_ENGINE
+
+from gen_stix.src.utils.container import Container
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.update_external_reference.update_external_reference_inputport_builder import (
+    UpdateExternalReferenceInputPortBuilder,
+)
 
 
 class UpdateExternalReferenceAdapter:
@@ -57,18 +55,21 @@ class UpdateExternalReferenceAdapter:
         sanitize_hashes = inputs["hashes"]
         sanitize_external_id = inputs["external_id"]
 
-        update_external_reference_icb = UpdateExternalReferenceInputPortBuilder()
-        update_external_reference_ic = update_external_reference_icb\
-            .create()\
-            .with_source_name(sanitize_source_name)\
-            .with_description(sanitize_description)\
-            .with_url(sanitize_url)\
-            .with_hashes(sanitize_hashes)\
-            .with_external_id(sanitize_external_id)\
+        update_external_reference_icb = (
+            UpdateExternalReferenceInputPortBuilder()
+        )
+        update_external_reference_ic = (
+            update_external_reference_icb.create()
+            .with_source_name(sanitize_source_name)
+            .with_description(sanitize_description)
+            .with_url(sanitize_url)
+            .with_hashes(sanitize_hashes)
+            .with_external_id(sanitize_external_id)
             .build()
+        )
 
-        update_external_reference_oc = Container\
-            .get_usecase_repo("UpdateExternalReference", storage_engine)\
-            .execute(update_external_reference_ic)
+        update_external_reference_oc = Container.get_usecase_repo(
+            "UpdateExternalReference", storage_engine
+        ).execute(update_external_reference_ic)
 
         return update_external_reference_oc

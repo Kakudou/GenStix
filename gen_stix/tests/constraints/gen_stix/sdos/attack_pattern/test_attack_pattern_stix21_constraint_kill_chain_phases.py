@@ -2,37 +2,47 @@ import os
 import json
 
 from pytest import mark
-from pytest_bdd\
-    import scenario, given, when, then, parsers
+from pytest_bdd import scenario, given, when, then, parsers
 
 
-from gen_stix.src.gen_stix.usecase.\
-     sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport_builder\
-     import CreateAttackPatternInputPortBuilder
+from gen_stix.src.gen_stix.usecase.sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport_builder import (
+    CreateAttackPatternInputPortBuilder,
+)
 
 STORAGE_ENGINE = "INMEMORY"
 __fullpath = os.path.dirname(os.path.abspath(__file__))
 
 
 @mark.order()
-@scenario(f"{__fullpath.split('/GenSTIX/')[0]}"
-          "/GenSTIX/gen_stix"
-          "/constraints/gen_stix/sdos/attack_pattern/attack_pattern_stix21_constraint_kill_chain_phases.constraint",
-          "Creating an AttackPattern with invalid kill_chain_phases.")
+@scenario(
+    f"{__fullpath.split('/GenSTIX/')[0]}"
+    "/GenSTIX/gen_stix"
+    "/constraints/gen_stix/sdos/attack_pattern/attack_pattern_stix21_constraint_kill_chain_phases.constraint",
+    "Creating an AttackPattern with invalid kill_chain_phases.",
+)
 def test_attack_pattern_stix21_constraint_kill_chain_phases():
     pass
 
 
-@given(parsers.parse("An AttackPattern is created with a {type_}, {name}, and invalid {kill_chain_phases}."), target_fixture="context")
-def given_attack_pattern_stix21_constraint_kill_chain_phases(type_, name, kill_chain_phases):
-    input_contract = CreateAttackPatternInputPortBuilder()\
-        .create()\
-        .with_type_(type_)\
+@given(
+    parsers.parse(
+        "An AttackPattern is created with a {type_}, {name}, and invalid {kill_chain_phases}."
+    ),
+    target_fixture="context",
+)
+def given_attack_pattern_stix21_constraint_kill_chain_phases(
+    type_, name, kill_chain_phases
+):
+    input_contract = (
+        CreateAttackPatternInputPortBuilder()
+        .create()
+        .with_type_(type_)
         .with_name(name)
+    )
 
     return {
         "kill_chain_phases": kill_chain_phases,
-        "input_contract": input_contract
+        "input_contract": input_contract,
     }
 
 
@@ -50,7 +60,16 @@ def when_attack_pattern_stix21_constraint_kill_chain_phases(context):
         context["error"] = ve
 
 
-@then(parsers.parse("A ValueError should be raised, stating that {kill_chain_phases} should be a list of kill-chain-phases."))
-def then_attack_pattern_stix21_constraint_kill_chain_phases(context, kill_chain_phases):
+@then(
+    parsers.parse(
+        "A ValueError should be raised, stating that {kill_chain_phases} should be a list of kill-chain-phases."
+    )
+)
+def then_attack_pattern_stix21_constraint_kill_chain_phases(
+    context, kill_chain_phases
+):
     assert type(context["error"]) is ValueError
-    assert str(context["error"]) == "`kill_chain_phases` must be a List[kill-chain-phase]."
+    assert (
+        str(context["error"])
+        == "`kill_chain_phases` must be a List[kill-chain-phase]."
+    )

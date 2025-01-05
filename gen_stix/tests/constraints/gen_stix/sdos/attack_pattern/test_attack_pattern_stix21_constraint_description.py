@@ -2,38 +2,45 @@ import os
 import json
 
 from pytest import mark
-from pytest_bdd\
-    import scenario, given, when, then, parsers
+from pytest_bdd import scenario, given, when, then, parsers
 
 
-from gen_stix.src.gen_stix.usecase.\
-     sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport_builder\
-     import CreateAttackPatternInputPortBuilder
+from gen_stix.src.gen_stix.usecase.sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport_builder import (
+    CreateAttackPatternInputPortBuilder,
+)
 
 STORAGE_ENGINE = "INMEMORY"
 __fullpath = os.path.dirname(os.path.abspath(__file__))
 
 
 @mark.order()
-@scenario(f"{__fullpath.split('/GenSTIX/')[0]}"
-          "/GenSTIX/gen_stix"
-          "/constraints/gen_stix/sdos/attack_pattern/attack_pattern_stix21_constraint_description.constraint",
-          "Creating an AttackPattern with an invalid description.")
+@scenario(
+    f"{__fullpath.split('/GenSTIX/')[0]}"
+    "/GenSTIX/gen_stix"
+    "/constraints/gen_stix/sdos/attack_pattern/attack_pattern_stix21_constraint_description.constraint",
+    "Creating an AttackPattern with an invalid description.",
+)
 def test_attack_pattern_stix21_constraint_description():
     pass
 
 
-@given(parsers.parse("An AttackPattern is created with a {type_}, {name}, and invalid {description}."), target_fixture="context")
-def given_attack_pattern_stix21_constraint_description(type_, name, description):
-    input_contract = CreateAttackPatternInputPortBuilder()\
-        .create()\
-        .with_type_(type_)\
+@given(
+    parsers.parse(
+        "An AttackPattern is created with a {type_}, {name}, and invalid {description}."
+    ),
+    target_fixture="context",
+)
+def given_attack_pattern_stix21_constraint_description(
+    type_, name, description
+):
+    input_contract = (
+        CreateAttackPatternInputPortBuilder()
+        .create()
+        .with_type_(type_)
         .with_name(name)
+    )
 
-    return {
-        "description": description,
-        "input_contract": input_contract
-    }
+    return {"description": description, "input_contract": input_contract}
 
 
 @when(parsers.parse("The AttackPattern is created."))
@@ -50,7 +57,11 @@ def when_attack_pattern_stix21_constraint_description(context):
         context["error"] = ve
 
 
-@then(parsers.parse("A TypeError should be raised, stating that {description} should be of type string."))
+@then(
+    parsers.parse(
+        "A TypeError should be raised, stating that {description} should be of type string."
+    )
+)
 def then_attack_pattern_stix21_constraint_description(context, description):
     assert type(context["error"]) is ValueError
     assert str(context["error"]) == "`description` must be a str."

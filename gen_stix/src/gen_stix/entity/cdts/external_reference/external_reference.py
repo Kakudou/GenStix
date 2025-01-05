@@ -1,8 +1,7 @@
 """This module is the core defined entity for ExternalReference"""
-from dataclasses\
-    import dataclass
-from typing\
-    import Dict
+
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass
