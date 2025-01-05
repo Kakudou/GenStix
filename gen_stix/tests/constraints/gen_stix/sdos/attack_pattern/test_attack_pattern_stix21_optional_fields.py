@@ -10,10 +10,10 @@ from gen_stix.src.utils.container import Container
 from gen_stix.src.gen_stix.usecase.sdos.attack_pattern.create_attack_pattern.create_attack_pattern_inputport_builder import (
     CreateAttackPatternInputPortBuilder,
 )
-from gen_stix.src.gen_stix.usecase.sdos.external_reference.create_external_reference.create_external_reference_inputport_builder import (
+from gen_stix.src.gen_stix.usecase.cdts.external_reference.create_external_reference.create_external_reference_inputport_builder import (
     CreateExternalReferenceInputPortBuilder,
 )
-from gen_stix.src.gen_stix.usecase.sdos.kill_chain_phase.create_kill_chain_phase.create_kill_chain_phase_inputport_builder import (
+from gen_stix.src.gen_stix.usecase.cdts.kill_chain_phase.create_kill_chain_phase.create_kill_chain_phase_inputport_builder import (
     CreateKillChainPhaseInputPortBuilder,
 )
 

@@ -334,6 +334,40 @@ project:
           type: str
       domain: cdts/kill_chain_phase
       name: KillChainPhase
+    AttackPattern:
+      attributes:
+        - description: The value of this property **MUST** be attack-pattern.
+          identifier: true
+          name: type_
+          type: str
+        - description: A list of external references which refer to non-STIX information.
+            This property MAY be used to provide one or more Attack Pattern identifiers,
+            such as a CAPEC ID. When specifying a CAPEC ID, the source_name property
+            of the external reference MUST be set to capec and the external_id property
+            MUST be formatted as CAPEC-[id].
+          identifier: false
+          name: external_references
+          type: List
+        - description: A name used to identify the Attack Pattern.
+          identifier: true
+          name: name
+          type: str
+        - description: A description that provides more details and context about
+            the Attack Pattern, potentially including its purpose and its key characteristics.
+          identifier: false
+          name: description
+          type: str
+        - description: Alternative names used to identify this Attack Pattern.
+          identifier: false
+          name: aliases
+          type: List[str]
+        - description: The list of Kill Chain Phases for which this Attack Pattern
+            is used.
+          identifier: false
+          name: kill_chain_phases
+          type: List
+      domain: sdos/attack_pattern
+      name: AttackPattern
   usecases:
     CreateExternalReference:
       description: Create a ExternalReference
@@ -384,4 +418,29 @@ project:
       description: List a KillChainPhase
       entity: KillChainPhase
       name: ListKillChainPhase
+      type: List
+    CreateAttackPattern:
+      description: Create a AttackPattern
+      entity: AttackPattern
+      name: CreateAttackPattern
+      type: Create
+    ReadAttackPattern:
+      description: Read a AttackPattern
+      entity: AttackPattern
+      name: ReadAttackPattern
+      type: Read
+    UpdateAttackPattern:
+      description: Update a AttackPattern
+      entity: AttackPattern
+      name: UpdateAttackPattern
+      type: Update
+    DeleteAttackPattern:
+      description: Delete a AttackPattern
+      entity: AttackPattern
+      name: DeleteAttackPattern
+      type: Delete
+    ListAttackPattern:
+      description: List a AttackPattern
+      entity: AttackPattern
+      name: ListAttackPattern
       type: List
