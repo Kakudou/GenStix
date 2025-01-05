@@ -183,19 +183,19 @@ After creating objects, you can bundle and export them as JSON for further use i
 
 ### **STIX Open Vocabulary Objects (ov)**
 
-- [ ] Hashing Algorithm Vocabulary
+- [x] Hashing Algorithm Vocabulary
 
 ### **STIX Common Data Types (CDTs)**
 
-- [ ] External Reference
-- [ ] Kill Chain Phase
+- [x] External Reference
+- [x] Kill Chain Phase
 - [ ] Hashes
 
 ### **Bundles**  
 - [ ] Bundle  
 
 ### **Enums**
-- [ ] External Reference CAPEC
+- [x] External Reference CAPEC
 
 ---
 
