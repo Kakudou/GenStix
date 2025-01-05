@@ -318,6 +318,22 @@ project:
           type: str
       domain: cdts/external_reference
       name: ExternalReference
+    KillChainPhase:
+      attributes:
+        - description: The name of the kill chain. The value of this property SHOULD
+            be all lowercase and SHOULD use hyphens instead of spaces or underscores
+            as word separators.
+          identifier: true
+          name: kill_chain_name
+          type: str
+        - description: The name of the phase in the kill chain. The value of this
+            property SHOULD be all lowercase and SHOULD use hyphens instead of spaces
+            or underscores as word separators.
+          identifier: true
+          name: phase_name
+          type: str
+      domain: cdts/kill_chain_phase
+      name: KillChainPhase
   usecases:
     CreateExternalReference:
       description: Create a ExternalReference
@@ -343,4 +359,29 @@ project:
       description: List a ExternalReference
       entity: ExternalReference
       name: ListExternalReference
+      type: List
+    CreateKillChainPhase:
+      description: Create a KillChainPhase
+      entity: KillChainPhase
+      name: CreateKillChainPhase
+      type: Create
+    ReadKillChainPhase:
+      description: Read a KillChainPhase
+      entity: KillChainPhase
+      name: ReadKillChainPhase
+      type: Read
+    UpdateKillChainPhase:
+      description: Update a KillChainPhase
+      entity: KillChainPhase
+      name: UpdateKillChainPhase
+      type: Update
+    DeleteKillChainPhase:
+      description: Delete a KillChainPhase
+      entity: KillChainPhase
+      name: DeleteKillChainPhase
+      type: Delete
+    ListKillChainPhase:
+      description: List a KillChainPhase
+      entity: KillChainPhase
+      name: ListKillChainPhase
       type: List
