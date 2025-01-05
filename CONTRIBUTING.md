@@ -292,6 +292,7 @@ Feature: CRUDL for the STIX 2.1 object AttackPattern.
 
 <details>
   <summary>test_attack_pattern_crudl.py</summary>
+
 ```python
 import os
 
@@ -358,6 +359,7 @@ def then_attack_pattern_crudl(context, new_description, name, type_):
 ```
 </details>
 
+
 As you can see, a lot of boilerplate has been written for us, so let's complete some of the missing information.
 
 First, in the Gherkin file, we need to provide data to test.
@@ -384,6 +386,7 @@ Okay, now let's add some code in the associated test.
 
 <details>
   <summary>test_attack_pattern_crudl.py</summary>
+
 ```python
 import os
 
@@ -483,6 +486,7 @@ def then_attack_pattern_crudl(context, new_description, name, type_):
 ```
 </details>
 
+
 I recommend creating all the constraints associated with the feature. It's easier to handle them as a bundle if they aren't too complex. I will only demonstrate one constraint in this README and not all of them. Please refer to the source code if you want to see the others.
 
 #### First constraint: attack_pattern_stix21_required_name
@@ -526,6 +530,7 @@ In this particular case, I don't need to make any changes in the constraint file
 
 <details>
   <summary>test_attack_pattern_stix21_required_name.py</summary>
+  
 ```python
 import os
 
@@ -583,6 +588,7 @@ def then_attack_pattern_stix21_required_name(context):
     assert str(context["error"]) == "`name` is a required field for AttackPattern"
 ```
 </details>
+
 
 let's do a little flake8 on top of that, we can exclude E501, since 80char is not really a thing anymore.
 
@@ -820,6 +826,7 @@ Let's take a look at create_attack_pattern_inputport_builder.py:
 
 <details>
   <summary>create_attack_pattern_inputport_builder.py</summary>
+
 ```python
 """This module is the builder that ensure the filling of the input contract"""
 from dataclasses\
@@ -1101,12 +1108,14 @@ class CreateAttackPatternInputPortBuilder:
 ```
 </details>
 
+
 As you can see, the builder creates several setter functions like with_xxx, which call _validate_xxx.
 Currently, _validate raises a NotImplementedError. We need to implement all the checks we outlined in our constraints within these methods.
 We'll need to do this for each inputport_builder in each CRUDL use case. For this guide, I'll only focus on the "create" use case.
 
 <details>
   <summary>create_attack_pattern_inputport_builder.py</summary>
+
 ```python
 """This module is the builder that ensure the filling of the input contract"""
 from dataclasses\
