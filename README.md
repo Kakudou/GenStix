@@ -1,3 +1,24 @@
+# Not Ready for use
+**This project is a work in progress and is not yet ready for use.**
+
+Here is the initial ROADMAP for the project, the goals is a released of a v1 at the end of January 2025.
+
+Roadmap before the V1 release:
+   - Create the first CLI for Attack Pattern, Kill Chain Phase and External Reference
+   - Create the first TUI for Attack Pattern, Kill Chain Phase and External Reference
+   - Create a storage in file in a desired folder in STIX2.1 json format.
+   - Finish the contribution guide based on the 3 previous points.
+   - Implement all the missing STIX2.1 objects. in the same way (in the order describe later in the README.md)
+   - Implenent SRO/Relationship between the objects.
+   - Implement the export of the objects in a bundle.
+At this point, the project will be ready for a v1 release, but i will also add the following features:
+   - Implement the export of the objects in a feed API REST.
+   - Implement the export to OpenCTI, through feed or specific connector.
+
+Feel free to post an issue, or contact me by email if you have any question or suggestion.   
+
+
+
 # **GenSTIX**  
 *A lightweight CLI/TUI tool for generating and bundling STIX 2.1 objects.*
 
