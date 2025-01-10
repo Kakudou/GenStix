@@ -1,5 +1,7 @@
 """This module is the builder that ensure the filling of the input contract"""
 
+import re
+
 from dataclasses import dataclass
 from typing import Any
 from gen_stix.src.gen_stix.usecase.cdts.kill_chain_phase.read_kill_chain_phase.read_kill_chain_phase_inputport import (
@@ -75,7 +77,21 @@ class ReadKillChainPhaseInputPortBuilder:
         --------
 
         """
-        raise NotImplementedError
+
+        if kill_chain_name is None or kill_chain_name == "":
+            raise ValueError(
+                "`kill_chain_name` is a required field for KillChainPhase"
+            )
+        elif type(kill_chain_name) is not str:
+            raise ValueError(
+                "`kill_chain_name` must be a str in lowercase with hyphens."
+            )
+        elif type(kill_chain_name) is str:
+            pattern = r"^[0-9a-z-]?$"
+            if bool(re.match(pattern, kill_chain_name)):
+                raise ValueError(
+                    "`kill_chain_name` must be a str in lowercase with hyphens."
+                )
 
     def with_phase_name(self, phase_name: str):
         """This function fill the phase_name in the contract
@@ -108,7 +124,21 @@ class ReadKillChainPhaseInputPortBuilder:
         --------
 
         """
-        raise NotImplementedError
+
+        if phase_name is None or phase_name == "":
+            raise ValueError(
+                "`phase_name` is a required field for KillChainPhase"
+            )
+        elif type(phase_name) is not str:
+            raise ValueError(
+                "`phase_name` must be a str in lowercase with hyphens."
+            )
+        elif type(phase_name) is str:
+            pattern = r"^[0-9a-z-]?$"
+            if bool(re.match(pattern, phase_name)):
+                raise ValueError(
+                    "`phase_name` must be a str in lowercase with hyphens."
+                )
 
     def build(self) -> ReadKillChainPhaseInputPort:
         """This function return the filled contract

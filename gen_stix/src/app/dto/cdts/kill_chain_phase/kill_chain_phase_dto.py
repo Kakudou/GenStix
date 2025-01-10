@@ -1,6 +1,8 @@
 """This module is the KillChainPhaseDTO that will be persist"""
 
+from json import loads as json_loads
 from dataclasses import dataclass
+from stix2 import KillChainPhase
 
 
 @dataclass
@@ -48,3 +50,33 @@ class KillChainPhaseDTO:
     @phase_name.setter
     def phase_name(self, phase_name: str):
         self.__phase_name = phase_name
+
+    def to_stix21(self) -> str:
+        """
+        This method will convert the DTO to KillChainPhase object
+
+        Returns:
+        --------
+        KillChainPhase
+            The KillChainPhase object
+        """
+        kill_chain_phase = KillChainPhase(
+            kill_chain_name=self.kill_chain_name, phase_name=self.phase_name
+        )
+
+        return kill_chain_phase.serialize(pretty=True, indent=2)
+
+    def from_stix21(self, kill_chain_phase: str):
+        """
+        This method will convert the KillChainPhase object to DTO
+
+        Parameters:
+        -----------
+        kill_chain_phase: KillChainPhase
+            The KillChainPhase object
+        """
+
+        kill_chain_stix21 = KillChainPhase(**json_loads(kill_chain_phase))
+
+        self.kill_chain_name = kill_chain_stix21.kill_chain_name
+        self.phase_name = kill_chain_stix21.phase_name

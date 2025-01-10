@@ -21,7 +21,7 @@ classifiers = [
         "Tools :: Security",
         "Tools :: STIX 2.1 Generator",
 ]
-dependencies = []
+dependencies = ["stix2"]
 dynamic = ["version", "readme"]
 
 [project.optional-dependencies]

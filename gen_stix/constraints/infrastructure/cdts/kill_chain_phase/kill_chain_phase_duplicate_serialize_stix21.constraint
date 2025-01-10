@@ -1,0 +1,10 @@
+Feature: Since the STIX2.1 id is only on the stix object, i need to check that multiple serialize DTO doesn't create a new stix object each time.
+
+    Scenario Outline: Serialize multiple time a Kill Chain Phase Core Object, and ensure only one stix2.1 is created.
+        Given I create a Kill Chain Phase with <kill_chain_name> and <phase_name>.
+        When I serialize that object two times into STIX2.1.
+        Then I should get the exact same stix2.1 object and no duplicate.
+
+        Examples:
+            | kill_chain_name                | phase_name                |
+            | duplicate-serialize-kill-chain | duplicate-serialize-phase |
