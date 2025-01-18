@@ -1,5 +1,6 @@
 import os
 
+from json import loads as json_loads
 from pytest import mark
 from pytest_bdd import scenario, given, when, then, parsers
 
@@ -57,4 +58,4 @@ def when_kill_chain_phase_serialize_to_stix21(context):
     )
 )
 def then_kill_chain_phase_serialize_to_stix21(context, valid_stix21):
-    assert context["stix21"] == valid_stix21
+    assert context["stix21"] == json_loads(valid_stix21)

@@ -24,6 +24,8 @@ class UpdateKillChainPhaseOutputPortBuilder:
         fill the kill_chain_name in the contract
     with_phase_name: str
         fill the phase_name in the contract
+    with_stix_representation: dict
+        fill the stix representation in the contract
     with_error:
         fill the possible usecase error
     build:
@@ -80,6 +82,24 @@ class UpdateKillChainPhaseOutputPortBuilder:
         """
 
         self.__output.phase_name = phase_name
+        return self
+
+    def with_stix_representation(self, stix_representation: dict):
+        """This function fill the stix representation in the contract
+
+        Parameters:
+        -----------
+        stix_representation: dict
+            the stix representation of the CreateKillChainPhase
+
+        Returns:
+        --------
+        CreateKillChainPhaseOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self.__output.stix_representation = stix_representation
         return self
 
     def with_error(self, error: str):

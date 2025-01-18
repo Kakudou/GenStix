@@ -1,10 +1,13 @@
 """This module is the core defined entity for KillChainPhase"""
 
 from dataclasses import dataclass
+from gen_stix.src.gen_stix.entity.cdts.common_properties_cdts import (
+    CommonPropertiesCDTs,
+)
 
 
 @dataclass
-class KillChainPhase:
+class KillChainPhase(CommonPropertiesCDTs):
     """This class defined the attributes for KillChainPhase
 
     Attributes:

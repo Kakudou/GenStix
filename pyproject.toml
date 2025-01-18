@@ -21,7 +21,10 @@ classifiers = [
         "Tools :: Security",
         "Tools :: STIX 2.1 Generator",
 ]
-dependencies = ["stix2"]
+dependencies = ["stix2",
+                "click",
+                "questionary",
+                "textual"]
 dynamic = ["version", "readme"]
 
 [project.optional-dependencies]
@@ -30,7 +33,8 @@ dev = ["flake8",
        "pre-commit",
        "pynvim",
        "pytest-bdd",
-       "pytest-order"]
+       "pytest-order",
+       "textual-dev"]
 
 [project.scripts]
 GenStix = "gen_stix.__main__:gen_stix"

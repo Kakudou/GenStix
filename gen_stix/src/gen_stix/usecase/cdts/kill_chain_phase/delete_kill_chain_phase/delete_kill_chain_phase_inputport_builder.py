@@ -87,8 +87,8 @@ class DeleteKillChainPhaseInputPortBuilder:
                 "`kill_chain_name` must be a str in lowercase with hyphens."
             )
         elif type(kill_chain_name) is str:
-            pattern = r"^[0-9a-z-]?$"
-            if bool(re.match(pattern, kill_chain_name)):
+            pattern = r"^[0-9a-z-]+$"
+            if not bool(re.match(pattern, kill_chain_name)):
                 raise ValueError(
                     "`kill_chain_name` must be a str in lowercase with hyphens."
                 )
@@ -134,8 +134,8 @@ class DeleteKillChainPhaseInputPortBuilder:
                 "`phase_name` must be a str in lowercase with hyphens."
             )
         elif type(phase_name) is str:
-            pattern = r"^[0-9a-z-]?$"
-            if bool(re.match(pattern, phase_name)):
+            pattern = r"^[0-9a-z-]+$"
+            if not bool(re.match(pattern, phase_name)):
                 raise ValueError(
                     "`phase_name` must be a str in lowercase with hyphens."
                 )

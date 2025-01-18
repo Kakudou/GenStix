@@ -1,19 +1,20 @@
 # Not Ready for use
-**This project is a work in progress and is not yet ready for use.**
+**This project is a work in progress and is not yet ready for use.**  
 
-Here is the initial ROADMAP for the project, the goals is a released of a v1 at the end of January 2025.
+We have x/40 objects fully implemented (CLI and TUI):  
+- 0/19 SDOs  
+- 0/18 SCOs  
+- 1/3 CDTs  
 
-Roadmap before the V1 release:
-   - Create the first CLI for Attack Pattern, Kill Chain Phase and External Reference
-   - Create the first TUI for Attack Pattern, Kill Chain Phase and External Reference
-   - Create a storage in file in a desired folder in STIX2.1 json format.
-   - Finish the contribution guide based on the 3 previous points.
-   - Implement all the missing STIX2.1 objects. in the same way (in the order describe later in the README.md)
-   - Implenent SRO/Relationship between the objects.
-   - Implement the export of the objects in a bundle.
-At this point, the project will be ready for a v1 release, but i will also add the following features:
-   - Implement the export of the objects in a feed API REST.
-   - Implement the export to OpenCTI, through feed or specific connector.
+so we have roughly reached 2.5% of the project.  
+
+After the first 30 objects, we will implement the SRO/Relationship between the objects, and then we will implement the export of the objects in a bundle.  
+
+Here is the initial ROADMAP for the project, the goals is a released of a v1 at the end of January 2025.  
+
+At this point, the project will be ready for a v1 release, but i will also add the following features:  
+   - Implement the export of the objects in a feed API REST.  
+   - Implement the export to OpenCTI, through feed or specific connector.  
 
 Feel free to post an issue, or contact me by email if you have any question or suggestion.   
 
@@ -34,7 +35,8 @@ Feel free to post an issue, or contact me by email if you have any question or s
 
 ## **TL;DR**
 
-GenSTIX is a Python-based CLI/TUI tool for generating and bundling STIX 2.1 objects. It is tailored for researchers, malware analysts, pentesters, and threat intelligence professionals who require quick and offline STIX object creation.
+GenSTIX is a Python-based CLI/TUI tool for generating and bundling STIX 2.1 objects.  
+It is tailored for researchers, malware analysts, pentesters, and threat intelligence professionals who require quick and offline STIX object creation.  
 
 ---
 
@@ -58,6 +60,7 @@ GenSTIX is a Python-based CLI/TUI tool for generating and bundling STIX 2.1 obje
     - [STIX Common Data Types (CDTs)](#stix-common-data-types-(cdts))  
     - [Bundles](#bundles)  
     - [Enums](#enums)  
+    - [Custom Properties](#custom-properties)  
   - [Roadmap](#roadmap)  
   - [Contributing](#contributing)  
   - [Architecture](#architecture)  
@@ -75,7 +78,8 @@ GenSTIX is a Python-based CLI/TUI tool for generating and bundling STIX 2.1 obje
 
 ## **Overview**  
 
-GenSTIX is a Python-based CLI/TUI tool designed to simplify the creation of STIX 2.1 objects and bundles. Whether you're in an air-gapped environment, working on a lightweight Linux server, or simply want a seamless way to create valid STIX objects, GenSTIX provides an intuitive and powerful solution.
+GenSTIX is a Python-based CLI/TUI tool designed to simplify the creation of STIX 2.1 objects and bundles.   
+Whether you're in an air-gapped environment, working on a lightweight Linux server, or simply want a seamless way to create valid STIX objects, GenSTIX provides an intuitive and powerful solution.  
 
 ---
 
@@ -131,18 +135,42 @@ GenSTIX is a Python-based CLI/TUI tool designed to simplify the creation of STIX
    GenSTIX
    ```  
 
-later on, we will release the package to PyPi for easier installation.
+later on, we will release the package to PyPi for easier installation.  
 
 ---
 
 ## **Usage**
 
 ### **CLI Mode**  
-1. Launch the tool:  
+1. Launch the tool and create a new project:  
    ```bash
-   GenSTIX
+   GenSTIX create-project
    ```  
-2. Follow the interactive prompts to create STIX objects.
+2a. Follow the interactive prompts to create STIX objects.  
+
+2b. Or you can use the CLI to create objects directly:  
+   ```bash
+   GenSTIX create-attack-pattern -p TestStix --name "Phishing" --description "A phishing attack pattern"
+   ```
+but with that method, you will only be able to create object with required attributes, and then you will have to edit it:  
+
+   ```bash
+   GenSTIX update-attack-pattern -p TestStix --name "Phishing" 
+   ```
+
+You can access the help with the following command:  
+   ```bash
+   GenSTIX --help
+   ```
+or the help for a specific command:
+   ```bash
+   GenSTIX create-attack-pattern --help
+   ```
+
+also a simple usage of the CLI can be shown with the following command:  
+   ```bash
+   GenSTIX --usage
+   ```
 
 ### **TUI Mode**  
 1. Launch the tool in TUI mode:  
@@ -159,7 +187,7 @@ After creating objects, you can bundle and export them as JSON for further use i
 ## **Supported STIX 2.1 Objects**  
 
 ### **STIX Domain Objects (SDOs)**  
-- [x] Attack Pattern
+- [x] Attack Pattern  
 - [ ] Campaign  
 - [ ] Course of Action  
 - [ ] Grouping  
@@ -204,28 +232,32 @@ After creating objects, you can bundle and export them as JSON for further use i
 
 ### **STIX Open Vocabulary Objects (ov)**
 
-- [x] Hashing Algorithm Vocabulary
+- [x] Hashing Algorithm Vocabulary  
 
 ### **STIX Common Data Types (CDTs)**
 
-- [x] External Reference
-- [x] Kill Chain Phase
-- [ ] Hashes
+- [x] External Reference  
+- [x] Kill Chain Phase  
+- [ ] Hashes  
 
 ### **Bundles**  
 - [ ] Bundle  
 
 ### **Enums**
-- [x] External Reference CAPEC
+- [x] External Reference CAPEC  
+
+### **Custom Properties**
+- [ ] Extension Definition  
 
 ---
 
 ## **Roadmap**  
 1. **Validation**: Automate validation for compliance with the STIX 2.1 specification.  
-2. **Enhanced TUI**: Build a richer, more interactive terminal UI for easier navigation.  
-3. **Custom Templates**: Enable users to save and reuse common attribute templates.  
-4. **Documentation**: Develop comprehensive guides with step-by-step examples.  
-5. **Integration Features**: Allow exporting to external threat intel APIs and feeds.  
+2. **Enhanced CLI**: Build a richer, and more visualy interactive CLI for easier navigation.  
+3. **Enhanced TUI**: Build a richer, more interactive TUI for easier navigation.  
+4. **Custom Templates**: Enable users to save and reuse common attribute templates.  
+5. **Documentation**: Develop comprehensive guides with step-by-step examples.  
+6. **Integration Features**: Allow exporting to external threat intel APIs and feeds.  
 
 ---
 
@@ -241,31 +273,39 @@ We welcome contributions from the community! Here's how to get involved:
 
 ## **Architecture**  
 
-GenSTIX adheres to modern software development principles to ensure scalability, maintainability, and ease of collaboration. Below are the core architectural choices:  
+GenSTIX adheres to modern software development principles to ensure scalability, maintainability, and ease of collaboration.  
+Below are the core architectural choices:  
 
 
 ### **Clean Architecture**  
-Clean Architecture organizes software into layers, separating high-level policy (business logic) from low-level implementation details (frameworks, databases, etc.). Core components are independent of external dependencies, promoting testability, scalability, and adaptability.
+Clean Architecture organizes software into layers, separating high-level policy (business logic) from low-level implementation details (frameworks, databases, etc.).  
+Core components are independent of external dependencies, promoting testability, scalability, and adaptability.  
 
 ### **BDD (Behavior-Driven Development)**  
-BDD emphasizes collaboration between developers, testers, and stakeholders to define behavior and requirements using natural language. It bridges communication gaps and ensures the software meets business goals by focusing on user-driven scenarios and acceptance criteria.
+BDD emphasizes collaboration between developers, testers, and stakeholders to define behavior and requirements using natural language.  
+It bridges communication gaps and ensures the software meets business goals by focusing on user-driven scenarios and acceptance criteria.  
 
 ### **TDD (Test-Driven Development)**  
-TDD focuses on writing tests before implementation. It involves a cycle of writing a failing test, implementing the code to pass the test, and then refactoring. This ensures code correctness, reduces defects, and improves overall design.
+TDD focuses on writing tests before implementation.  
+It involves a cycle of writing a failing test, implementing the code to pass the test, and then refactoring.  
+This ensures code correctness, reduces defects, and improves overall design.  
 
 ### **DDD (Domain-Driven Design)**  
-DDD is a design approach centered on the core business domain. It uses a shared, ubiquitous language between developers and stakeholders, defining clear boundaries between domain logic and other concerns through strategic design patterns.
+DDD is a design approach centered on the core business domain.  
+It uses a shared, ubiquitous language between developers and stakeholders, defining clear boundaries between domain logic and other concerns through strategic design patterns.  
 
 ### **Port/Adapter Pattern**  
-This pattern decouples the core application logic from external systems (like databases or APIs) through defined interfaces. Ports represent abstractions of core functionality, while adapters implement these abstractions for specific technologies or use cases.
+This pattern decouples the core application logic from external systems (like databases or APIs) through defined interfaces.  
+Ports represent abstractions of core functionality, while adapters implement these abstractions for specific technologies or use cases.  
 
 ### **Builder Pattern**  
-The Builder Pattern constructs complex objects step by step, separating object creation from its representation. It provides flexibility and clarity when dealing with optional parameters, validation, or different configurations.
+The Builder Pattern constructs complex objects step by step, separating object creation from its representation.  
+It provides flexibility and clarity when dealing with optional parameters, validation, or different configurations.  
 
 
 ## **Example for a new Feature**
 
-Follow the guide at [CONTRIBUTING.md](CONTRIBUTING.md) to add a new feature or object to GenSTIX.
+Follow the guide at [CONTRIBUTING.md](CONTRIBUTING.md) to add a new feature or object to GenSTIX.  
 
 ---
 
@@ -275,7 +315,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-<center><sub>✨ Made with ❤️ by [Kakudou ~ カクドウ](https://kakudou.org) ✨</sub></center>  
+<center><sub>✨ Made with ❤️ by <a href="https://kakudou.org">Kakudou ~ カクドウ</a> ✨</sub></center>
+<center> ☕️ Feel free to contribute to my daily coffee <a href="https://www.buymeacoffee.com/Kakudou"> Buy me a coffee</a> ☕️</center>
 
 --- 
 

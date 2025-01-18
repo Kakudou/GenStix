@@ -88,6 +88,7 @@ class ReadKillChainPhase:
                 self.builder.create()
                 .with_kill_chain_name(kill_chain_phase.kill_chain_name)
                 .with_phase_name(kill_chain_phase.phase_name)
+                .with_stix_representation(kill_chain_phase.stix_representation)
                 .build()
             )
 

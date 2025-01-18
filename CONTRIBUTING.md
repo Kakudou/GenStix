@@ -1484,4 +1484,114 @@ Let’s keep in mind our end goal: generating AttackPattern objects in STIX 2.1 
 At this point, we can only create a Python object representation of STIX 2.1 through code.
 Our next step is to convert this into a STIX 2.1 object and enable this functionality via a CLI call.
 
+We can do that from various way, but since we are using the Clean Architecture, we will stop working on the CoreEngine and start working on infrastructure.
+This means, we will adapt the code in the repository and from the DTO, so that our python object can be serialized/mapped into a STIX2.1 object using the python-stix2 library.
+And after that, we will create a CLI command that will use the STORAGE_ENGINE associated with the repository to store the object and then we will be able to retrieve it through the pre-created Adapter.
+
+By default my framework only generates the Storage Engine for the INMEMORY repository, but you can easily adapt it to use a database or a file system.
+And that's what we will do, to make that application more usefull, we will implements a file system storage engine, who will sertialize the STIX 2.1 object into a file and retrieve it from the file.
+This will allow us to configure the application to use a particular folder, and so create multiple workspaces, each with its own set of STIX 2.1 objects.
+
+Let's start by adapting the DTO and the repository, but before that, we need to define the Test Plan for this new 'infrastructure feature'.
+And later on the same for the CLI command.
+
+#### Gherkins for the Infrastructure Features (STIX 2.1 Object Serialization)
+
+We can start by defining the Test Plan for the DTO and the Repository.
+
+```markdown
+We want to ensure that the AttackPattern DTO can be serialized into a STIX 2.1 object.
+We want to ensure that the AttackPattern DTO can be deserialized from a STIX 2.1 object.
+We want to ensure that the AttackPattern Repository can store a STIX 2.1 object.
+We want to ensure that the AttackPattern Repository can retrieve a STIX 2.1 object.
+```
+
+Next, same as before, let's write the gherkin feature file for the DTO and the Repository.
+
+```gherkin
+Feature: AttackPattern DTO Serialization
+
+  Scenario: Serialize the AttackPattern DTO into a STIX 2.1 object
+    Given an AttackPattern DTO
+    When the DTO is serialized
+    Then the DTO is a valid STIX 2.1 object
+
+  Scenario: Deserialize a STIX 2.1 object into an AttackPattern DTO
+    Given a STIX 2.1 object
+    When the object is deserialized
+    Then the object is a valid AttackPattern DTO
+
+Feature: AttackPattern INMEMORY Repository Storage
+
+  Scenario: Store a STIX 2.1 object into the AttackPattern INMEMORY Repository
+    Given a STIX 2.1 object
+    When the object is stored
+    Then the object is stored in the INMEMORY repository
+
+  Scenario: Retrieve a STIX 2.1 object from the AttackPattern INMEMORY Repository
+    Given a STIX 2.1 object
+    When the object is retrieved
+    Then the object is retrieved from the INMEMORY repository
+
+Feature: AttackPattern INFILE Repository Storage
+
+  Scenario: Store a STIX 2.1 object into the AttackPattern INFILE Repository
+    Given a STIX 2.1 object
+    When the object is stored
+    Then the object is stored in the INFILE repository
+
+  Scenario: Retrieve a STIX 2.1 object from the AttackPattern INFILE Repository
+    Given a STIX 2.1 object
+    When the object is retrieved
+    Then the object is retrieved from the INFILE repository
+```
+
+Now, let's generate the test files for the DTO and the Repository.
+I will not detail the process, as it is the same as before.
+You can always check the code in the repository if you need more information.
+
+
+#### Gherkins for the CLI Command
+
+The same as before, let's write the gherkin feature file for the CLI command.
+
+Those features will be CRUDL from CLI, but with the STIX 2.1 object serialization and storage.
+
+```gherkin
+Feature: AttackPattern CLI Command
+
+  Scenario: Create an AttackPattern STIX 2.1 object from the CLI
+    Given a CLI command
+    When the command is called with the required arguments
+    Then the STIX 2.1 object is created and stored in the repository
+
+  Scenario: Read an AttackPattern STIX 2.1 object from the CLI
+    Given a CLI command
+    When the command is called with the required arguments
+    Then the STIX 2.1 object is retrieved from the repository
+
+  Scenario: Update an AttackPattern STIX 2.1 object from the CLI
+    Given a CLI command
+    When the command is called with the required arguments
+    Then the STIX 2.1 object is updated in the repository
+
+  Scenario: Delete an AttackPattern STIX 2.1 object from the CLI
+    Given a CLI command
+    When the command is called with the required arguments
+    Then the STIX 2.1 object is deleted from the repository
+
+  Scenario: List all AttackPattern STIX 2.1 objects from the CLI
+    Given a CLI command
+    When the command is called with the required arguments
+    Then all the STIX 2.1 objects are listed from the repository
+```
+
+And we will follow the same logic as before, generate the test files for the CLI command.
+Then we will implement the code to make the tests pass.
+
+#### Conclusion
+
+This guide is a step-by-step process to create a CoreEngine for a STIX 2.1 object using Clean Architecture.
+We have created the CoreEngine for the AttackPattern entity, and we have defined the next steps to implement the STIX 2.1 object serialization and storage.
+We have also defined the Test Plan for the DTO, Repository, and CLI Command, and we have written the Gherkin feature files for each of them.
 

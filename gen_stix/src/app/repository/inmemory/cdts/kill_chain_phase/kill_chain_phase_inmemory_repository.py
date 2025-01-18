@@ -85,6 +85,7 @@ class KillChainPhaseINMEMORYRepository(KillChainPhaseGateway):
         saved = False
 
         kill_chain_phase_dto = self._convert_to_dto(kill_chain_phase)
+        kill_chain_phase.stix_representation = kill_chain_phase_dto.to_stix21()
         self.__persists.kill_chain_phases[kill_chain_phase_dto.id] = (
             kill_chain_phase_dto
         )

@@ -7,4 +7,4 @@ Feature: Serialize a Kill Chain Phase into an STIX object.
 
         Examples:
             | kill_chain_name            | phase_name           | valid_stix21                                                                                                        |
-            | serialize-kill-chain | serialize-phase-name | {\n    "kill_chain_name": "serialize-kill-chain",\n    "phase_name": "serialize-phase-name"\n} |
+            | serialize-kill-chain | serialize-phase-name | {"kill_chain_name": "serialize-kill-chain", "phase_name": "serialize-phase-name"} |

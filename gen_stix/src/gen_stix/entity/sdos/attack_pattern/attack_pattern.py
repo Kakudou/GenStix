@@ -3,9 +3,13 @@
 from dataclasses import dataclass
 from typing import List
 
+from gen_stix.src.gen_stix.entity.sdos.common_properties_sdos import (
+    CommonPropertiesSDOs,
+)
+
 
 @dataclass
-class AttackPattern:
+class AttackPattern(CommonPropertiesSDOs):
     """This class defined the attributes for AttackPattern
 
     Attributes:

@@ -3,6 +3,7 @@
 from os import makedirs, path, listdir, remove
 from hashlib import sha256
 from typing import List
+from json import dumps as json_dumps
 
 from gen_stix.src.utils.singleton import Singleton
 from gen_stix.src.app.dto.cdts.kill_chain_phase.kill_chain_phase_dto import (
@@ -55,6 +56,12 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
             f"{self.__persists.save_path}/cdts/kill_chain_phase"
         )
 
+    def _update_files_path(self):
+        self.__persists = InFilePersist()
+        self.__files_path = (
+            f"{self.__persists.save_path}/cdts/kill_chain_phase"
+        )
+
     def _generate_id(self, identifier) -> str:
         """This function will generate an ID for the entity
         base on his identifier
@@ -84,18 +91,20 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
             True if saved
 
         """
+        self._update_files_path()
 
         saved = False
 
         kill_chain_phase_dto = self._convert_to_dto(kill_chain_phase)
         stix21 = kill_chain_phase_dto.to_stix21()
+        kill_chain_phase.stix_representation = stix21
 
         file_dest = f"{self.__files_path}/{kill_chain_phase_dto.id}.json"
 
         makedirs(self.__files_path, exist_ok=True)
 
         with open(file_dest, "w") as file:
-            file.write(stix21)
+            file.write(json_dumps(stix21))
 
         saved = True
 
@@ -115,6 +124,8 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
             True if exist
 
         """
+
+        self._update_files_path()
 
         exist = False
 
@@ -163,6 +174,8 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
 
         """
 
+        self._update_files_path()
+
         kill_chain_phases = []
         if path.isdir(self.__files_path):
             for file in listdir(self.__files_path):
@@ -194,6 +207,8 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
 
         """
 
+        self._update_files_path()
+
         kill_chain_phase = None
 
         if self.exist_by_identifier(identifier):
@@ -223,6 +238,8 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
             True if deleted
 
         """
+
+        self._update_files_path()
 
         deleted = False
 
@@ -261,7 +278,6 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
         kill_chain_phase_dto.id = self._generate_id(identifier)
         kill_chain_phase_dto.kill_chain_name = kill_chain_phase.kill_chain_name
         kill_chain_phase_dto.phase_name = kill_chain_phase.phase_name
-        kill_chain_phase_dto.to_stix21()  # To generate stix21 ID
 
         return kill_chain_phase_dto
 
@@ -285,5 +301,6 @@ class KillChainPhaseINFILERepository(KillChainPhaseGateway):
         kill_chain_phase = KillChainPhase()
         kill_chain_phase.kill_chain_name = kill_chain_phase_dto.kill_chain_name
         kill_chain_phase.phase_name = kill_chain_phase_dto.phase_name
+        kill_chain_phase.stix_representation = kill_chain_phase_dto.to_stix21()
 
         return kill_chain_phase

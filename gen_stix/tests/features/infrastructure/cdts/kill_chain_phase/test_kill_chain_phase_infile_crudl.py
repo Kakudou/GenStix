@@ -41,7 +41,7 @@ def test_kill_chain_phase_infile_crudl():
     target_fixture="context",
 )
 def given_kill_chain_phase_infile_crudl(kill_chain_name, phase_name):
-    InFilePersist().save_path = "/tmp/pytests"
+    InFilePersist().save_path = "/tmp/GenStix/pytests"
 
     inputs = {}
 

@@ -7,5 +7,5 @@ Feature: The kill_chain_name should be all lowercase and use hyphens instead of 
 
         Examples:
             | kill_chain_name           | phase_name  |
-            | INVALID-kill-CHAIN-name-1 | phase-name1 |
-            | invalid_kill-chain name-2 | phase-name2 |
+            | INVALID-kill-CHAIN-name-1 | phase-name |
+            | invalid_kill-chain name-2 | phase-name |

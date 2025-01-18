@@ -38,7 +38,6 @@ def given_kill_chain_phase_stix21_constraint_phase_name(
         CreateKillChainPhaseInputPortBuilder()
         .create()
         .with_kill_chain_name(kill_chain_name)
-        .with_phase_name(phase_name)
     )
 
     return {"phase_name": phase_name, "input_contract": input_contract}

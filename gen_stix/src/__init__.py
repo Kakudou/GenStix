@@ -1,3 +1,3 @@
-SAVE_PATH = "/tmp"
+SAVE_PATH = "/tmp/GenStix"
 STORAGE_ENGINE = "INFILE"
 VERSION = "v0.0.0"

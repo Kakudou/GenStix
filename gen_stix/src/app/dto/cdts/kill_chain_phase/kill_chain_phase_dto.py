@@ -51,7 +51,7 @@ class KillChainPhaseDTO:
     def phase_name(self, phase_name: str):
         self.__phase_name = phase_name
 
-    def to_stix21(self) -> str:
+    def to_stix21(self) -> dict:
         """
         This method will convert the DTO to KillChainPhase object
 
@@ -64,7 +64,7 @@ class KillChainPhaseDTO:
             kill_chain_name=self.kill_chain_name, phase_name=self.phase_name
         )
 
-        return kill_chain_phase.serialize(pretty=True, indent=2)
+        return json_loads(kill_chain_phase.serialize())
 
     def from_stix21(self, kill_chain_phase: str):
         """
