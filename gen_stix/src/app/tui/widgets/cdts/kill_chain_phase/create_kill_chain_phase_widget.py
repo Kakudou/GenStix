@@ -8,9 +8,6 @@ from textual._node_list import DuplicateIds
 from gen_stix.src.app.adapter.cdts.kill_chain_phase.create_kill_chain_phase.create_kill_chain_phase_adapter import (
     CreateKillChainPhaseAdapter,
 )
-from gen_stix.src.app.cli.entity_view.cdts.kill_chain_phase.kill_chain_phase_view import (
-    KillChainPhaseView,
-)
 
 from gen_stix.src import STORAGE_ENGINE
 
@@ -21,6 +18,7 @@ class CreateKillChainPhaseWidget(Widget):
         super().__init__(id=id, classes=classes)
         self.error = None
         self.create_kill_chain_phase_form()
+        self.target = target
 
     def compose(self) -> ComposeResult:
         yield Label("Create a new kill chain phase")
@@ -36,11 +34,13 @@ class CreateKillChainPhaseWidget(Widget):
             title="Kill chain name",
             placeholder="Enter the kill chain name",
             title_align="left",
+            auto_focus=False,
         )
         self.phase_name_field = CustomInputField(
             title="Phase name",
             placeholder="Enter the phase name",
             title_align="left",
+            auto_focus=False,
         )
 
     async def submit_execute(self):
@@ -54,7 +54,6 @@ class CreateKillChainPhaseWidget(Widget):
 
     async def validate_kill_chain_phase(self):
         """Validate the kill chain and phase names."""
-        # Remove previous error widgets
         await self.remove_errors()
 
         if self.kill_chain_name_field.content == "":
@@ -81,9 +80,6 @@ class CreateKillChainPhaseWidget(Widget):
             )
             return False
 
-        print(self.phase_name_field.content)
-        print(self.phase_name_field.content.replace("-", ""))
-        print(self.phase_name_field.content.replace("-", "").isalnum())
         if not self.phase_name_field.content.replace("-", "").isalnum():
             await self._load_error(
                 "Phase name must be in lowercase and contain only alphanumeric characters and hyphens",
@@ -98,13 +94,13 @@ class CreateKillChainPhaseWidget(Widget):
         """Handle key events and trigger submission on Enter key."""
         if event.key == "enter":
             await self.submit_execute()
+            if not self.phase_name_field.has_focus:
+                self.app.action_focus_next()
 
     async def create_kill_chain_phase(
         self, kill_chain_name: str, phase_name: str
     ):
         """Create the kill chain phase and handle the result."""
-        print(f"Kill chain name: {kill_chain_name}")
-        print(f"Phase name: {phase_name}")
 
         inputs = {
             "kill_chain_name": kill_chain_name.lower(),
@@ -112,26 +108,21 @@ class CreateKillChainPhaseWidget(Widget):
         }
         await self.remove_errors()
 
-        kill_chain = CreateKillChainPhaseAdapter.execute(
-            inputs, STORAGE_ENGINE
-        )
+        contract = CreateKillChainPhaseAdapter.execute(inputs, STORAGE_ENGINE)
 
-        if kill_chain.error:
+        if contract.error:
             await self._load_error(
-                kill_chain.error,
+                contract.error,
                 self.kill_chain_name_field,
                 id="error_duplicate",
             )
         else:
-            self.app.screen.navigation_tree.add_leaf(
-                "Kill Chain Phase",
-                f"{kill_chain_name} - {phase_name}",
-                f"{kill_chain_name} - {phase_name}",
+            await self.app.screen.action_clear_stat()
+            self.app.screen._load_data_for_stix("Kill Chain Phase")
+            self.app.screen.navigation_tree.find_child(
+                f"{contract.kill_chain_name} - {contract.phase_name}"
             )
-            print("Kill chain phase created successfully")
-            kc_view = KillChainPhaseView.from_contract(kill_chain)
-            print("The json representation of the kill chain phase is:")
-            print(kc_view.stix_representation)
+            self.app.simulate_key("r")
 
     async def remove_errors(self):
         """Remove error widgets from the form."""

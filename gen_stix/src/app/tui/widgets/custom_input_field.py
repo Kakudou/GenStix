@@ -20,6 +20,8 @@ class CustomInputField(Widget):
         password: bool = False,
         placeholder: str = "",
         title_align: str = "center",
+        auto_focus: bool = True,
+        disabled: bool = False,
     ):
         self.can_focus = True
         super().__init__()
@@ -29,14 +31,17 @@ class CustomInputField(Widget):
         self.placeholder = placeholder
         self.prompt = ""
         self.title_align = title_align
+        self.auto_focus = auto_focus
+        self.disabled = disabled
 
     def on_key(self, event: events.Key) -> None:
-        if event.is_printable:
-            self.content += event.character
-        elif event.key == "backspace":
-            self.content = self.content[:-1]
-        elif event.key == "enter":
-            self.app.action_focus_next()
+        if not self.disabled:
+            if event.is_printable:
+                self.content += event.character
+            elif event.key == "backspace":
+                self.content = self.content[:-1]
+            elif event.key == "enter" and self.auto_focus:
+                self.app.action_focus_next()
 
     def watch_has_focus(self, value: bool) -> None:
         if value:
@@ -45,7 +50,8 @@ class CustomInputField(Widget):
             self.prompt = ""
 
     def on_paste(self, event: events.Paste) -> None:
-        self.content += event.text
+        if not self.disabled:
+            self.content += event.text
 
     def render(self) -> RenderableType:
         if self.content != "" or self.has_focus:

@@ -50,7 +50,7 @@ class DeleteProjectWidget(Widget):
                 "Project name cannot be empty.", self.project_name_field
             )
             return False
-        elif self.project_name_field.content != self.target:
+        elif self.project_name_field.content != self.target.label.plain:
             await self._load_error(
                 "Project name does not match the current project.",
                 self.project_name_field,
@@ -66,7 +66,6 @@ class DeleteProjectWidget(Widget):
     async def delete_project(self, project_name: str, project_path: str):
         """Delete the project and update the navigation."""
         try:
-            print(f"Deleting project {project_name} at {project_path}")
             project_dir = f"{project_path}/{project_name}"
 
             rmtree(project_dir, ignore_errors=True)
@@ -84,7 +83,7 @@ class DeleteProjectWidget(Widget):
             )
 
         except Exception as e:
-            print(f"Error deleting project: {e}")
+            print(e)
             self.app.push_screen(
                 ValidationModal(
                     f"Failed to delete project `{project_name}` at `{project_path}`.",

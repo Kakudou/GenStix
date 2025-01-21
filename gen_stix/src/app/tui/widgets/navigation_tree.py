@@ -30,8 +30,6 @@ class NavigationTree(Widget):
 
     def expand_root(self):
         self.nav_tree.root.expand()
-        print("expand_root")
-        print(self.nav_tree.root)
         self.nav_tree.refresh()
 
     def clear_root_children(self, root):
@@ -39,17 +37,17 @@ class NavigationTree(Widget):
             for child in childs:
                 if child.label.plain == root:
                     child._children = []
-                    child.collapse()
+                    # ?                     child.collapse()
                     return
                 recursive(child.children, root)
 
         recursive(self.nav_tree.root.children, root)
 
-    def add_sub_root(self, root, key):
+    def add_sub_root(self, root, key, expand=False):
         def recursive(childs, root, key):
             for child in childs:
                 if child.label.plain == root:
-                    child.add(key, expand=False)
+                    child.add(key, expand=expand)
                     return
                 recursive(child.children, root, key)
 
@@ -68,6 +66,26 @@ class NavigationTree(Widget):
     def add_bundle_leaf(self, root, bundles):
         for item in bundles:
             self.add_leaf(root, item, item)
+
+    def find_child(self, my_child):
+        def recursive(childs, my_child):
+            for child in childs:
+                if child.label.plain == my_child:
+                    self.current_node = child
+                    return child
+                recursive(child.children, my_child)
+
+        recursive(self.nav_tree.root.children, my_child)
+
+    def focus_child(self, my_child):
+        def recursive(childs, my_child):
+            for child in childs:
+                if child.label.plain == my_child:
+                    self.nav_tree.select_node(child)
+                    return
+                recursive(child.children, my_child)
+
+        recursive(self.nav_tree.root.children, my_child)
 
     async def on_tree_node_highlighted(
         self, event: Tree.NodeHighlighted

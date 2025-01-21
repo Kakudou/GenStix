@@ -16,44 +16,44 @@ When you highlight an item in the navigation tree on the left, you can use the f
 ## On a **_Project name_** or **_"GenSTIX"_**:
 
 - '`c`':
-    Will open a form to create a new project.
+    Opens a form to create a new project.
 - '`d`':
-   Will delete the selected project and all its associated data.
+    Deletes the selected project and all associated data.
 
 ---
 
-## On a **_type of STIX_** Object (e.g. 'Indicator', 'Attack Pattern', 'MAC Address', etc.):
+## On a **_type of STIX_** Object (e.g. 'Kill Chain Phase', 'Attack Pattern', 'MAC Address', etc.):
 
 - '`c`':
-   Will open a form to create a new object of the selected type.
+    Opens a form to create a new object of the selected type.
 - '`d`':
-   Will delete all objects of the selected type.
+    Deletes all objects of the selected type.
+- '`r`' or '`f`':
+    Opens a form to search for objects of the selected type and print the results.
 
 ---
 
 ## On a **_STIX_** Object:
 
 - '`c`':
-   Will open a form to create a new object of the same type as the selected object with the same properties as placeholders.
+    Opens a form to create a new object of the same type as the selected object, with the same properties as placeholders.
 - '`a`' or 'enter':
-   Will show the details of the selected object, and the json representation of the object.
+    Shows the details of the selected object, along with its JSON representation.
 - '`u`':
-   Will update the selected object.
+    Updates the selected object.
 - '`d`':
-   Will delete the selected object.
-- '`p`':
-   Will only output the json representation of the selected object.
+    Deletes the selected object.
 
 ---
 
 ## General keys
 
-- '`q`':
-   Will clear the content part of the screen, this mean the right part of the screen.
+- '`esc`' or '`q`':
+    Clears the content part of the screen (the right side).
 - '`h`':
-   Will show this help screen.
+    Displays this help screen.
 - '`ctrl+c`':
-   Will exit the application.
+    Exits the application.
 
 ---
 

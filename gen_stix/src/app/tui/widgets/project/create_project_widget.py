@@ -65,7 +65,6 @@ class CreateProjectWidget(Widget):
             with open(f"{project_path}/.projects", "a") as f:
                 f.write(f"{project_name}\n")
 
-            self.app.session["project_name"] = project_name
             self.app.screen.reload_navigation_tree()
 
             self.app.push_screen(
@@ -84,6 +83,7 @@ class CreateProjectWidget(Widget):
             )
 
         finally:
+            self.app.session["project_name"] = project_name
             self.app.action_focus_previous()
 
     async def _load_error(self, error_message: str, before_widget: Widget):
@@ -122,3 +122,4 @@ class ValidationModal(ModalScreen):
         if event.key == "enter":
             self.app.pop_screen()
             await self.app.action_simulate_key("enter")
+            await self.app.action_simulate_key("end")
