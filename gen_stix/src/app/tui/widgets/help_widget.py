@@ -36,7 +36,7 @@ When you highlight an item in the navigation tree on the left, you can use the f
 ## On a **_STIX_** Object:
 
 - '`c`':
-    Opens a form to create a new object of the same type as the selected object, with the same properties as placeholders.
+    Opens a form to create a new object of the same type as the selected object.  
 - '`a`' or 'enter':
     Shows the details of the selected object, along with its JSON representation.
 - '`u`':
@@ -57,9 +57,9 @@ When you highlight an item in the navigation tree on the left, you can use the f
 
 ---
 
-# **Happy STIXing!**
-# ✨ Made with ❤️ by [Kakudou ~ カクドウ](https://kakudou.org)✨
-# ☕️ Feel free to contribute to [my daily coffee](https://www.buymeacoffee.com/Kakudou) ☕️
+# **Happy STIXing!**  
+# ✨ Made with ❤️ by [Kakudou ~ カクドウ](https://kakudou.org)✨  
+# ☕️ Feel free to contribute to [my daily coffee](https://www.buymeacoffee.com/Kakudou) ☕️  
 
 ---
 

@@ -255,7 +255,10 @@ class HomeScreen(Screen):
     ) -> None:
         if node:
             await self.clean_widgets()
-            await self.load_widget_dyn(node, "Delete")
+            if node.label.plain.startswith("GenSTIX ("):
+                await self.action_clear_stat()
+            else:
+                await self.load_widget_dyn(node, "Delete")
 
     async def load_widget_dyn(self, node, operation):
         widget_to_load, node_target = self.identify_widget_to_load(node)

@@ -34,7 +34,8 @@ dev = ["flake8",
        "pynvim",
        "pytest-bdd",
        "pytest-order",
-       "textual-dev"]
+       "textual-dev",
+       "pytest-asyncio",]
 
 [project.scripts]
 GenStix = "gen_stix.__main__:gen_stix"

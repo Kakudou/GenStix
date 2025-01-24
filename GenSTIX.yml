@@ -345,6 +345,54 @@ project:
       domain: cdts/kill_chain_phase
       name: KillChainPhase
   features:
+    AccessKillChainPhase:
+      description: When pressing 'r' on an existing kill chain phase object, i should
+        access it.
+      domain: cdts/kill_chain_phase
+      given: I'm in the app in tui mode with a valid <projects_path>, <project_name>
+        and i have a valid Kill Chain Phase created with <kill_chain_name> and a <phase_name>.
+      name: AccessKillChainPhase
+      scenario: Access an exisiting kill chain phase object by pressing 'r' to get
+        the json output.
+      then: I should see it, and the associated json output.
+      type: tui
+      when: I press 'r' on the existing kill chain phase.
+    AccessNewProjectsPath:
+      description: Accessing and creating a new projects path.
+      domain: projects
+      given: I start the app in tui mode.
+      name: AccessNewProjectsPath
+      scenario: Accessing and create a new projects path.
+      then: I should access the HomeScreen for that <projects_path>.
+      type: tui
+      when: I provide a new <projects_path>.
+    AccessProject:
+      description: Access a project.
+      domain: projects
+      given: I'm in the tui app, with a project <project_name> created.
+      name: AccessProject
+      scenario: Access a projects by pressing 'enter' on it.
+      then: I should see a list of Category STIX (sdos,scos,cdts,..) in that project.
+      type: tui
+      when: I press 'enter' on that project.
+    AccessProjectsPath:
+      description: Accessing the Projects path.
+      domain: projects
+      given: I start the app in tui mode.
+      name: AccessProjectsPath
+      scenario: Access the provided Projects path.
+      then: I should access the HomeScreen for that <projects_path>.
+      type: tui
+      when: I provide an existing <projects_path>.
+    AccessTui:
+      description: Accessing the TUI of the App.
+      domain: projects
+      given: I launch the app using the --tui arguments.
+      name: AccessTui
+      scenario: Accessing the TUI of the App should show us the main screen.
+      then: i should got the Starting Screen.
+      type: tui
+      when: The app starts.
     AttackPatternCrudl:
       description: CRUDL for the STIX 2.1 object AttackPattern.
       domain: sdos/attack_pattern
@@ -355,6 +403,64 @@ project:
         and one AttackPattern should be deleted.
       type: gen_stix
       when: The AttackPattern is created, updated with <new_description>, and deleted.
+    CreateKillChainPhase:
+      description: Create a Kill Chain Phase
+      domain: cdts/kill_chain_phase
+      given: I'm in the tui app, in a valid <projects_path> and <project_name>. when
+        i press 'c' on 'Kill Chain Phase' in the 'CDTs' list.
+      name: CreateKillChainPhase
+      scenario: Create a Kill Chain Phase STIX2.1 Object.
+      then: I should have the Kill Chain Phase object created, and i should see the
+        json output.
+      type: tui
+      when: I have a form i should fill with a valid <kill_chain_name> and <phase_name>
+        then press 'enter'.
+    CreateProject:
+      description: Create a new project.
+      domain: projects
+      given: I'm in the tui app with a valid <projects_path>, and i press 'c' on the
+        navtree.
+      name: CreateProject
+      scenario: Create a new project in projects path when pressing 'c'.
+      then: The project should be created and should be visible in the navtree.
+      type: tui
+      when: The form should appear and in put a valid <project_name> and press 'enter'.
+    DeleteAllKillChainPhase:
+      description: Delete all Kill Chain Phase
+      domain: cdts/kill_chain_phase
+      given: I'm in the app in tui mode, with a valid <projects_path>, <project_name>,
+        and i have few valid Kill Chain Phase object created with <kill_chain_name>,
+        <phase_name>.
+      name: DeleteAllKillChainPhase
+      scenario: When pressing 'd' on 'Kill Chain Phase', we should be able to delete
+        them all at once.
+      then: Once validate, they should all be deleted.
+      type: tui
+      when: I press 'd' on the 'Kill Chain Phase' i should get a validation form to
+        delete them all at once.
+    DeleteKillChainPhase:
+      description: Delete an existing Kill Chain Phase.
+      domain: cdts/kill_chain_phase
+      given: I'm in the app in tui mode, with a valid <projects_path>, <project_name>
+        and i have a valid Kill chain Phase created with <kill_chain_name> and <phase_name>.
+      name: DeleteKillChainPhase
+      scenario: When pressing 'd' on an existing Kill chain phase object, we should
+        nbe able to delete it.
+      then: The Kill Chain Phase object should've been deleted.
+      type: tui
+      when: I press 'd' on the object, i should get a form to validate the deletion,
+        when pressing 'enter' i validate it.
+    DeleteProject:
+      description: Delete a project and all contained objects.
+      domain: projects
+      given: I'm on the app in tui node, with a valid <projects_path> and a <project_name>
+        created.
+      name: DeleteProject
+      scenario: When pressing 'd' on a project, i should be able to delete it.
+      then: The project should no longer exists.
+      type: tui
+      when: i press 'd' on the <project_name> after completing and validating the
+        deletion form.
     ExternalReferenceCrudl:
       description: CRUDL for the STIX 2.1 object ExternalReference.
       domain: cdts/external_reference
@@ -395,6 +501,18 @@ project:
       then: I should be able to get the <valid_stix21> json for that object.
       type: infrastructure
       when: I serialize that object into STIX2.1
+    SearchKillChainPhase:
+      description: When pressing 'r' on 'Kill Chain Phase' i have a form allowing
+        us to search an object.
+      domain: cdts/kill_chain_phase
+      given: I'm in the app in tui mode with a valid <projects_path>, <project_name>
+        and i have a valid Kill Chain Phase created with <kill_chain_name>, <phase_name>.
+      name: SearchKillChainPhase
+      scenario: Will search and access an existing Kill Chain Phase Object.
+      then: I should see the corresponding Kill Chain Phase object and the json output.
+      type: tui
+      when: I press 'r' on 'Kill Chain Phase' in the navtree, i have a search form,
+        when i fulfill it and pres 'enter'.
   name: GenSTIX
   path: /home/kakudou/construct/python/WiP
   types:

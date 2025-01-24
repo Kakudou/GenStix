@@ -18,9 +18,6 @@ class ReadKillChainPhaseWidget(Widget):
     def __init__(self, id: str, classes: str = "", target=None):
         super().__init__(id=id, classes=classes)
         self.target = target
-        from gen_stix.src.utils.debug import Debug
-
-        print(f"Debug: {Debug.dump(self.app.screen.navigation_tree)}")
         if self.target.label.plain == "Kill Chain Phase":
             self.app.screen.navigation_tree.current_node.expand()
             self.ask_for_kill_chain_phase()

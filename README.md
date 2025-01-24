@@ -368,7 +368,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-<center><sub>✨ Made with ❤️ by <a href="https://kakudou.org">Kakudou ~ カクドウ</a> ✨</sub></center>  
+<center><sub>✨ Made with ❤️ by <a href="https://kakudou.org">Kakudou ~ カクドウ</a> ✨  </sub></center>   
+  
 <center> ☕️ Feel free to contribute to my daily coffee <a href="https://www.buymeacoffee.com/Kakudou"> Buy me a coffee</a> ☕️</center>  
 
 --- 
