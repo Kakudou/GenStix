@@ -30,8 +30,7 @@ class HomeScreen(Screen):
 
     cdts = [
         "Kill Chain Phase",
-        # ?         "External Reference",
-        # ?         "Hashes",
+        "External Reference",
     ]
 
     sdos = [
@@ -161,7 +160,9 @@ class HomeScreen(Screen):
             data_list = []
 
         for data in data_list:
-            self.navigation_tree.clear_root_children(data_type)
+            self.navigation_tree.clear_root_children(
+                data.replace(" ", "_").lower()
+            )
             self.navigation_tree.add_sub_root(data_type, data, expand=expand)
             adapter_to_call = getattr(
                 adapter, f"List{data.replace(' ', '')}Adapter"
@@ -296,6 +297,8 @@ class HomeScreen(Screen):
                 )
             except ModuleNotFoundError:
                 await self.action_clear_stat()
+        else:
+            await self.action_clear_stat()
 
     def identify_widget_to_load(self, node: Tree.NodeSelected) -> tuple:
         """Identify the widget to load based on node properties."""

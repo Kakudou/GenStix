@@ -35,12 +35,16 @@ class CreateKillChainPhaseWidget(Widget):
             placeholder="Enter the kill chain name",
             title_align="left",
             auto_focus=False,
+            required=True,
+            tooltip_text="""The name of the kill chain.""",
         )
         self.phase_name_field = CustomInputField(
             title="Phase name",
             placeholder="Enter the phase name",
             title_align="left",
             auto_focus=False,
+            required=True,
+            tooltip_text="""The name of the phase in the kill chain.""",
         )
 
     async def submit_execute(self):

@@ -8,7 +8,7 @@ from gen_stix.src.app.repository.infile.infile_persist import InFilePersist
 import logging
 
 logging.basicConfig(
-    filename="genstix.log",
+    filename="app.log",
     level=logging.ERROR,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )

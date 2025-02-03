@@ -48,7 +48,7 @@ def given_attack_pattern_stix21_optional_fields(
             CreateExternalReferenceInputPortBuilder()
             .create()
             .with_source_name(external_ref["source_name"])
-            .with_description(external_ref["description"])
+            .with_external_id(external_ref["external_id"])
             .build()
         )
         eref_usecase = Container.get_usecase_repo(

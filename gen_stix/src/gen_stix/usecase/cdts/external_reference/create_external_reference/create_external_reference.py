@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from typing import Any
-from uuid import uuid4
 
 from gen_stix.src.gen_stix.usecase.cdts.external_reference.create_external_reference.create_external_reference_inputport import (
     CreateExternalReferenceInputPort,
@@ -83,13 +82,10 @@ class CreateExternalReference:
         hashes = inputp.hashes
         external_id = inputp.external_id
 
-        if external_id is None or external_id == "":
-            if source_name == "capec":
-                external_id = (
-                    f"CAPEC-{ExternalReferenceCapec.from_name(description)}"
-                )
-            else:
-                external_id = str(uuid4())
+        if source_name.lower() == "capec":
+            external_id = (
+                f"CAPEC-{ExternalReferenceCapec.from_name(external_id).value}"
+            )
 
         identifier = (source_name, external_id)
 
@@ -116,6 +112,9 @@ class CreateExternalReference:
                 .with_url(external_reference.url)
                 .with_hashes(external_reference.hashes)
                 .with_external_id(external_reference.external_id)
+                .with_stix_representation(
+                    external_reference.stix_representation
+                )
                 .build()
             )
 

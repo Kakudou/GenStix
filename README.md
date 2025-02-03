@@ -4,13 +4,13 @@
 We have x/40 objects fully implemented (CLI and TUI):  
 - 0/19 SDOs  
 - 0/18 SCOs  
-- 1/3 CDTs  
+- 2/3 CDTs  
 
-so we have roughly reached 2.5% of the project.  
+so we have roughly reached 5% of the project.  
 
 After the first 30 objects, we will implement the SRO/Relationship between the objects, and then we will implement the export of the objects in a bundle.  
 
-Here is the initial ROADMAP for the project, the goals is a released of a v1 at the end of January 2025.  
+Here is the initial ROADMAP for the project.  
 
 At this point, the project will be ready for a v1 release, but i will also add the following features:  
    - Implement the export of the objects in a feed API REST.  
@@ -60,6 +60,7 @@ It is tailored for researchers, malware analysts, pentesters, and threat intelli
     - [STIX Common Data Types (CDTs)](#stix-common-data-types-(cdts))  
     - [Bundles](#bundles)  
     - [Enums](#enums)  
+    - [Open Vocabulary](#open-vocabulary)
     - [Custom Properties](#custom-properties)  
   - [Roadmap](#roadmap)  
   - [Contributing](#contributing)  
@@ -240,7 +241,7 @@ After creating objects, you can bundle and export them as JSON for further use i
 ## **Supported STIX 2.1 Objects**  
 
 ### **STIX Domain Objects (SDOs)**  
-- [x] Attack Pattern  
+- [ ] Attack Pattern  
 - [ ] Campaign  
 - [ ] Course of Action  
 - [ ] Grouping  
@@ -291,13 +292,15 @@ After creating objects, you can bundle and export them as JSON for further use i
 
 - [x] External Reference  
 - [x] Kill Chain Phase  
-- [ ] Hashes  
 
 ### **Bundles**  
 - [ ] Bundle  
 
 ### **Enums**
 - [x] External Reference CAPEC  
+
+### **Open Vocabulary*
+- [x] Hashing Algorithm Vocabulary  
 
 ### **Custom Properties**
 - [ ] Extension Definition  
@@ -368,9 +371,11 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-<center><sub>✨ Made with ❤️ by <a href="https://kakudou.org">Kakudou ~ カクドウ</a> ✨  </sub></center>   
-  
-<center> ☕️ Feel free to contribute to my daily coffee <a href="https://www.buymeacoffee.com/Kakudou"> Buy me a coffee</a> ☕️</center>  
+<center><sub> ✨ Made with ❤️ by <a href="https://kakudou.org">Kakudou ~ カクドウ</a> ✨  </sub></center>  
+
+---
+
+<center><sub> ☕️ Feel free to contribute to my daily coffee <a href="https://www.buymeacoffee.com/Kakudou">Buy me a coffee</a> ☕️  </sub></center>  
 
 --- 
 

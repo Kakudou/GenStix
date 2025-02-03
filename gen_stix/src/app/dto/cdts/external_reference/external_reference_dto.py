@@ -1,7 +1,9 @@
 """This module is the ExternalReferenceDTO that will be persist"""
 
+from json import loads as json_loads
 from dataclasses import dataclass
 from typing import Dict
+from stix2 import ExternalReference
 
 
 @dataclass
@@ -82,3 +84,45 @@ class ExternalReferenceDTO:
     @external_id.setter
     def external_id(self, external_id: str):
         self.__external_id = external_id
+
+    def to_stix21(self) -> dict:
+        """
+        This method will convert the DTO to ExternalReference object
+
+        Returns:
+        --------
+        ExternalReference
+            The ExternalReference object
+        """
+        external_reference = ExternalReference(
+            source_name=self.source_name,
+            external_id=self.external_id,
+            description=self.description,
+            url=self.url,
+            hashes=self.hashes,
+        )
+
+        return json_loads(external_reference.serialize())
+
+    def from_stix21(self, external_reference: str):
+        """
+        This method will convert the ExternalReference object to DTO
+
+        Parameters:
+        -----------
+        external_reference: ExternalReference
+            The ExternalReference object
+        """
+
+        external_reference_stix21 = ExternalReference(
+            **json_loads(external_reference)
+        )
+
+        self.source_name = external_reference_stix21.source_name
+        self.external_id = external_reference_stix21.external_id
+        if "description" in external_reference_stix21.keys():
+            self.description = external_reference_stix21.description
+        if "url" in external_reference_stix21.keys():
+            self.url = external_reference_stix21.url
+        if "hashes" in external_reference_stix21.keys():
+            self.hashes = external_reference_stix21.hashes

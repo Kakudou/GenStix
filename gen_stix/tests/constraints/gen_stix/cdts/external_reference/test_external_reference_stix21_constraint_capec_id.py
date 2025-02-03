@@ -62,5 +62,5 @@ def then_external_reference_stix21_constraint_capec_id(context, external_id):
         str(context["error"])
         == "`external_id` with a `source_name` 'capec' must be a formatted as CAPEC-[id]."
         or str(context["error"])
-        == "No external-reference CAPEC found for None."
+        == "No external-reference CAPEC found for BadExternalId."
     )

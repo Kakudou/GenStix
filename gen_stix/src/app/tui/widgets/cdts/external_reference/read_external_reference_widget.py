@@ -6,83 +6,81 @@ from textual.app import ComposeResult
 from textual.widgets import Label, Static
 from gen_stix.src.app.tui.widgets.custom_input_field import CustomInputField
 
-from gen_stix.src.app.adapter.cdts.kill_chain_phase.read_kill_chain_phase.read_kill_chain_phase_adapter import (
-    ReadKillChainPhaseAdapter,
+from gen_stix.src.app.adapter.cdts.external_reference.read_external_reference.read_external_reference_adapter import (
+    ReadExternalReferenceAdapter,
 )
 
 from gen_stix.src import STORAGE_ENGINE
 
 
-class ReadKillChainPhaseWidget(Widget):
+class ReadExternalReferenceWidget(Widget):
 
     def __init__(self, id: str, classes: str = "", target=None):
         super().__init__(id=id, classes=classes)
         self.target = target
-        if self.target.label.plain == "Kill Chain Phase":
+        if self.target.label.plain == "External Reference":
             self.app.screen.navigation_tree.current_node.expand()
-            self.ask_for_kill_chain_phase()
+            self.ask_for_external_reference()
         else:
             self.app.screen.navigation_tree.focus_child(
                 self.app.screen.navigation_tree.current_node.label.plain
             )
-            self.read_kill_chain_phase(
-                kill_chain_name=self.target.label.plain.split(" - ")[0],
-                phase_name=self.target.label.plain.split(" - ")[1],
+            self.read_external_reference(
+                source_name=self.target.label.plain.split(" - ")[0],
+                external_id=self.target.label.plain.split(" - ")[1],
             )
 
     def compose(self) -> ComposeResult:
-        yield Label("Read a Kill Chain Phase")
-        yield self.kill_chain_name_field
-        yield self.phase_name_field
-        if self.target.label.plain != "Kill Chain Phase":
+        yield Label("Read a External Reference")
+        yield self.source_name_field
+        yield self.external_id_field
+        if self.target.label.plain != "External Reference":
             yield self.json_field
 
     def on_mount(self):
-        self.kill_chain_name_field.focus()
+        self.source_name_field.focus()
 
-    def ask_for_kill_chain_phase(self):
+    def ask_for_external_reference(self):
         """Create and initialize input fields for the form."""
 
-        self.kill_chain_name_field = CustomInputField(
-            title="Kill chain name",
-            placeholder="Enter the kill chain name",
+        self.source_name_field = CustomInputField(
+            title="Source name",
+            placeholder="Enter the source name",
             title_align="left",
             auto_focus=False,
-            required=True,
         )
-        self.phase_name_field = CustomInputField(
-            title="Phase name",
-            placeholder="Enter the phase name",
+        self.external_id_field = CustomInputField(
+            title="External id",
+            placeholder="Enter the external id",
             title_align="left",
             auto_focus=False,
-            required=True,
         )
 
     async def submit_execute(self):
         """Validate inputs and execute the read of the kill chain phase."""
-        if self.target.label.plain == "Kill Chain Phase":
-            error = await self.validate_kill_chain_phase()
+        if self.target.label.plain == "External Reference":
+            error = await self.validate_external_reference()
             if error is None:
                 inputs = {
-                    "kill_chain_name": self.kill_chain_name_field.content,
-                    "phase_name": self.phase_name_field.content,
+                    "source_name": self.source_name_field.content,
+                    "external_id": self.external_id_field.content,
                 }
-                contract = ReadKillChainPhaseAdapter().execute(
+                contract = ReadExternalReferenceAdapter().execute(
                     inputs, STORAGE_ENGINE
                 )
                 if contract.error is not None:
                     await self._load_error(
                         contract.error,
-                        self.kill_chain_name_field,
-                        "kill_chain_name_error",
+                        self.source_name_field,
+                        "source_name_error",
                     )
                 else:
-                    self.read_kill_chain_phase(
-                        kill_chain_name=contract.kill_chain_name,
-                        phase_name=contract.phase_name,
+                    self.read_external_reference(
+                        source_name=contract.source_name,
+                        external_id=contract.external_id,
                     )
                     self.app.screen.navigation_tree.find_child(
-                        f"{contract.kill_chain_name} - {contract.phase_name}"
+                        f"{contract.source_name} - {contract.external_id}"
                     )
                     new_target = self.app.screen.navigation_tree.current_node
                     await self.app.screen.action_clear_stat()
@@ -91,24 +89,24 @@ class ReadKillChainPhaseWidget(Widget):
                     )
                     self.app.simulate_key("r")
 
-    async def validate_kill_chain_phase(self):
-        """Validate the kill chain and phase names."""
+    async def validate_external_reference(self):
+        """Validate the kill chain and external ids."""
         # Remove previous error widgets
         await self.remove_errors()
 
-        if self.kill_chain_name_field.content == "":
+        if self.source_name_field.content == "":
             await self._load_error(
-                "Kill chain name cannot be empty",
-                self.kill_chain_name_field,
-                "kill_chain_name_error",
+                "Source name cannot be empty",
+                self.source_name_field,
+                "source_name_error",
             )
             return False
 
-        if self.phase_name_field.content == "":
+        if self.external_id_field.content == "":
             await self._load_error(
-                "Phase name cannot be empty",
-                self.phase_name_field,
-                "phase_name_error",
+                "External id cannot be empty",
+                self.external_id_field,
+                "external_id_error",
             )
             return False
 
@@ -116,39 +114,41 @@ class ReadKillChainPhaseWidget(Widget):
         """Handle key events and trigger submission on Enter key."""
         if event.key == "enter":
             await self.submit_execute()
-            if not self.phase_name_field.has_focus:
+            if not self.external_id_field.has_focus:
                 self.app.action_focus_next()
 
-    def read_kill_chain_phase(self, kill_chain_name, phase_name):
+    def read_external_reference(self, source_name, external_id):
         """Create and initialize input fields for the form."""
 
         inputs = {
-            "kill_chain_name": kill_chain_name,
-            "phase_name": phase_name,
+            "source_name": source_name,
+            "external_id": external_id,
         }
         stix_representation = None
 
-        contract = ReadKillChainPhaseAdapter().execute(inputs, STORAGE_ENGINE)
+        contract = ReadExternalReferenceAdapter().execute(
+            inputs, STORAGE_ENGINE
+        )
 
         if contract.error is not None:
             return
 
-        kill_chain_name = contract.kill_chain_name
-        phase_name = contract.phase_name
+        source_name = contract.source_name
+        external_id = contract.external_id
         stix_representation = contract.stix_representation
 
-        self.kill_chain_name_field = CustomInputField(
-            title="Kill chain name",
+        self.source_name_field = CustomInputField(
+            title="Source name",
             title_align="left",
             auto_focus=False,
-            content=kill_chain_name,
+            content=source_name,
             disabled=True,
         )
-        self.phase_name_field = CustomInputField(
-            title="Phase name",
+        self.external_id_field = CustomInputField(
+            title="External id",
             title_align="left",
             auto_focus=False,
-            content=phase_name,
+            content=external_id,
             disabled=True,
         )
         self.json_field = Markdown(
@@ -158,8 +158,8 @@ class ReadKillChainPhaseWidget(Widget):
     async def remove_errors(self):
         """Remove error widgets from the form."""
         for error_id in [
-            "kill_chain_name_error",
-            "phase_name_error",
+            "source_name_error",
+            "external_id_error",
         ]:
             try:
                 await self.get_widget_by_id(error_id).remove()

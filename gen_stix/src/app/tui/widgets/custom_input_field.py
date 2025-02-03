@@ -6,6 +6,7 @@ from rich.text import Text
 from textual import events
 from textual.reactive import Reactive
 from textual.widget import Widget
+from rich.markdown import Markdown
 
 
 class CustomInputField(Widget):
@@ -22,9 +23,16 @@ class CustomInputField(Widget):
         title_align: str = "center",
         auto_focus: bool = True,
         disabled: bool = False,
+        id="",
+        classes="",
+        required=False,
+        tooltip_text="",
     ):
         self.can_focus = True
-        super().__init__()
+        if id != "" and classes != "":
+            super().__init__(id=id, classes=classes)
+        else:
+            super().__init__()
         self.title = title
         self.password = password
         self.content = content
@@ -33,6 +41,11 @@ class CustomInputField(Widget):
         self.title_align = title_align
         self.auto_focus = auto_focus
         self.disabled = disabled
+        self.required = required
+        self.tooltip_text = f""" # {self.title} {'' if not self.required else '(Required)'}
+---
+
+{tooltip_text}"""
 
     def on_key(self, event: events.Key) -> None:
         if not self.disabled:
@@ -41,7 +54,7 @@ class CustomInputField(Widget):
             elif event.key == "backspace":
                 self.content = self.content[:-1]
             elif event.key == "enter" and self.auto_focus:
-                self.app.action_focus_next()
+                self.app.simulate_key("tab")
 
     def watch_has_focus(self, value: bool) -> None:
         if value:
@@ -73,10 +86,14 @@ class CustomInputField(Widget):
         renderable = Align.left(renderable_text)
         return Panel(
             renderable,
-            title=self.title,
+            title=f"{self.title}{'' if not self.required else ' (Required)'}",
             title_align=self.title_align,
             height=3,
             style="bold white on rgb(50,57,50)",
             border_style="#004b6f",
             box=DOUBLE,
         )
+
+    def _on_mount(self, event: events.Mount) -> None:
+        self.tooltip = Markdown(self.tooltip_text)
+        return super()._on_mount(event)

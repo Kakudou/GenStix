@@ -239,7 +239,7 @@ class CreateExternalReferenceInputPortBuilder:
             if type(external_id) is not str:
                 raise ValueError("`external_id` must be a str.")
             if self.__input.source_name == "capec":
-                ExternalReferenceCapec.from_name(self.__input.description)
+                ExternalReferenceCapec.from_name(external_id)
 
     def build(self) -> CreateExternalReferenceInputPort:
         """This function return the filled contract

@@ -40,12 +40,7 @@ def test_external_reference_stix21_optional_fields():
 def given_external_reference_stix21_optional_fields(
     source_name, description, url, hashes, external_id
 ):
-    if source_name == "capec":
-        wanted_external_id = (
-            f"CAPEC-{ExternalReferenceCapec.from_name(description).value}"
-        )
-    else:
-        wanted_external_id = external_id
+
     input_contract = (
         CreateExternalReferenceInputPortBuilder()
         .create()
@@ -53,9 +48,16 @@ def given_external_reference_stix21_optional_fields(
         .with_description(description)
         .with_url(url)
         .with_hashes(json.loads(hashes))
-        .with_external_id(wanted_external_id)
+        .with_external_id(external_id)
         .build()
     )
+
+    if source_name == "capec":
+        wanted_external_id = (
+            f"CAPEC-{ExternalReferenceCapec.from_name(external_id).value}"
+        )
+    else:
+        wanted_external_id = external_id
 
     return {
         "external_id": wanted_external_id,

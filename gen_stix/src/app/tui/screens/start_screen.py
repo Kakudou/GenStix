@@ -26,10 +26,18 @@ class StartScreen(Screen):
         self.header = Header(show_clock=True)
 
         self.projects_path_field = CustomInputField(
-            "Projects Path", projects_path, placeholder="Projects path"
+            "Projects Path",
+            projects_path,
+            placeholder="Projects path",
+            auto_focus=True,
         )
         self.submit_button = Button("Submit", variant="primary", id="submit")
         self.footer = Footer()
+
+    def on_key(self, event):
+        if event.key == "enter" or event.key == "tab":
+            self.submit_execute()
+            event.stop()
 
     def on_mount(self):
         """Method to be executed when the screen is mounted."""

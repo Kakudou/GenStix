@@ -2,10 +2,13 @@
 
 from dataclasses import dataclass
 from typing import Dict
+from gen_stix.src.gen_stix.entity.cdts.common_properties_cdts import (
+    CommonPropertiesCDTs,
+)
 
 
 @dataclass
-class ExternalReference:
+class ExternalReference(CommonPropertiesCDTs):
     """This class defined the attributes for ExternalReference
 
     Attributes:

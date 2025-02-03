@@ -6,6 +6,6 @@ Feature: The ExternalReference object should accept the following optional field
         Then The fields <description>, <url>, <hashes>, and <external_id> of the object should be as provided during creation.
 
         Examples:
-            | source_name | description                  | url                 | hashes                                           | external_id |
-            | capec       | Browser in the Middle (BiTM) | ""                  | {"SHA-256":"SHA256 value"}                       | ""          |
-            | web-url     | Url for kakudou              | https://kakudou.org | {"MD5" :"MD5 value","SHA3-512":"SHA3 512 value"} | ""          |
+            | source_name | description                | url                 | hashes                                           | external_id                  |
+            | capec       | Description for that capec | ""                  | {"SHA-256":"SHA256 value"}                       | Browser in the Middle (BiTM) |
+            | web-url     | Url for kakudou            | https://kakudou.org | {"MD5" :"MD5 value","SHA3-512":"SHA3 512 value"} | ext_id                           |

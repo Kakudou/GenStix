@@ -45,12 +45,14 @@ class DeleteKillChainPhaseWidget(Widget):
             placeholder="Enter the kill chain name",
             title_align="left",
             auto_focus=False,
+            required=True,
         )
         self.phase_name_field = CustomInputField(
             title="Phase name",
             placeholder="Enter the phase name",
             title_align="left",
             auto_focus=False,
+            required=True,
         )
 
     def delete_all_kill_chain_phase_form(self):
@@ -60,6 +62,7 @@ class DeleteKillChainPhaseWidget(Widget):
             placeholder="Enter 'yes' to confirm",
             title_align="left",
             auto_focus=False,
+            required=True,
         )
 
     async def submit_execute(self):
