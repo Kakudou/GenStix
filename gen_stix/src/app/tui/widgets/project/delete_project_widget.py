@@ -82,8 +82,7 @@ class DeleteProjectWidget(Widget):
                 )
             )
 
-        except Exception as e:
-            print(e)
+        except Exception:
             self.app.push_screen(
                 ValidationModal(
                     f"Failed to delete project `{project_name}` at `{project_path}`.",

@@ -30,6 +30,8 @@ class ReadExternalReferenceOutputPortBuilder:
         fill the hashes in the contract
     with_external_id: str
         fill the external_id in the contract
+    with_stix_representation: dict
+        fill the stix representation in the contract
     with_error:
         fill the possible usecase error
     build:
@@ -140,6 +142,24 @@ class ReadExternalReferenceOutputPortBuilder:
         """
 
         self.__output.external_id = external_id
+        return self
+
+    def with_stix_representation(self, stix_representation: dict):
+        """This function fill the stix representation in the contract
+
+        Parameters:
+        -----------
+        stix_representation: dict
+            the stix representation of the ExternalReference
+
+        Returns:
+        --------
+        CreateExternalReferenceOutputPortBuilder
+            this builder with the contract to fill
+
+        """
+
+        self.__output.stix_representation = stix_representation
         return self
 
     def with_error(self, error: str):

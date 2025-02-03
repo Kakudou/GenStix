@@ -6,6 +6,10 @@ from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_referen
     ReadExternalReferenceInputPort,
 )
 
+from gen_stix.src.gen_stix.entity.enums.external_reference_capec import (
+    ExternalReferenceCapec,
+)
+
 
 @dataclass
 class ReadExternalReferenceInputPortBuilder:
@@ -75,7 +79,13 @@ class ReadExternalReferenceInputPortBuilder:
         --------
 
         """
-        raise NotImplementedError
+
+        if source_name is None or source_name == "":
+            raise ValueError(
+                "`source_name` is a required field for ExternalReference"
+            )
+        elif type(source_name) is not str:
+            raise ValueError("`source_name` must be a str.")
 
     def with_external_id(self, external_id: str):
         """This function fill the external_id in the contract
@@ -108,7 +118,15 @@ class ReadExternalReferenceInputPortBuilder:
         --------
 
         """
-        raise NotImplementedError
+
+        if external_id is not None:
+            if type(external_id) is not str:
+                raise ValueError("`external_id` must be a str.")
+            if self.__input.source_name == "capec":
+                if external_id.lower().startswith("capec-"):
+                    external_id = external_id
+                else:
+                    ExternalReferenceCapec.from_name(external_id)
 
     def build(self) -> ReadExternalReferenceInputPort:
         """This function return the filled contract

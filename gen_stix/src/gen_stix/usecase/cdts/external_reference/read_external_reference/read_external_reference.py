@@ -3,6 +3,9 @@
 from dataclasses import dataclass
 from typing import Any
 
+from gen_stix.src.gen_stix.entity.enums.external_reference_capec import (
+    ExternalReferenceCapec,
+)
 from gen_stix.src.gen_stix.usecase.cdts.external_reference.read_external_reference.read_external_reference_inputport import (
     ReadExternalReferenceInputPort,
 )
@@ -73,6 +76,10 @@ class ReadExternalReference:
         source_name = inputp.source_name
         external_id = inputp.external_id
 
+        if source_name.lower() == "capec":
+            if not external_id.lower().startswith("capec-"):
+                external_id = f"CAPEC-{ExternalReferenceCapec.from_name(external_id).value}"
+
         identifier = (source_name, external_id)
 
         external_reference = self.gateway.find_by_identifier(identifier)
@@ -91,6 +98,9 @@ class ReadExternalReference:
                 .with_url(external_reference.url)
                 .with_hashes(external_reference.hashes)
                 .with_external_id(external_reference.external_id)
+                .with_stix_representation(
+                    external_reference.stix_representation
+                )
                 .build()
             )
 
